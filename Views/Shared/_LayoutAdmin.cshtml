@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/LayoutAdmin.css" asp-append-version="true" />
+    <!-- Linking Google fonts for icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <main class="d-flex ">
+        <aside class="sidebar">
+            <!-- Sidebar header -->
+            <header class="sidebar-header">
+                <a href="#" class="header-logo">
+                    <img src="logo.png" alt="CodingNepal">
+                </a>
+                <button class="toggler sidebar-toggler">
+                    <span class="material-symbols-rounded">chevron_left</span>
+                </button>
+                <button class="toggler menu-toggler">
+                    <span class="material-symbols-rounded">menu</span>
+                </button>
+            </header>
+
+            <nav class="sidebar-nav">
+                <!-- Primary top nav -->
+                <ul class="nav-list primary-nav">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">dashboard</span>
+                            <span class="nav-label">Dashboard</span>
+                        </a>
+                        <span class="nav-tooltip">Dashboard</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">calendar_today</span>
+                            <span class="nav-label">Calendar</span>
+                        </a>
+                        <span class="nav-tooltip">Calendar</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">notifications</span>
+                            <span class="nav-label">Notifications</span>
+                        </a>
+                        <span class="nav-tooltip">Notifications</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">group</span>
+                            <span class="nav-label">Team</span>
+                        </a>
+                        <span class="nav-tooltip">Team</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">insert_chart</span>
+                            <span class="nav-label">Analytics</span>
+                        </a>
+                        <span class="nav-tooltip">Analytics</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">star</span>
+                            <span class="nav-label">Bookmarks</span>
+                        </a>
+                        <span class="nav-tooltip">Bookmarks</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">settings</span>
+                            <span class="nav-label">Settings</span>
+                        </a>
+                        <span class="nav-tooltip">Settings</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">account_circle</span>
+                            <span class="nav-label">Profile</span>
+                        </a>
+                        <span class="nav-tooltip">Profile</span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="nav-icon material-symbols-rounded">logout</span>
+                            <span class="nav-label">Logout</span>
+                        </a>
+                        <span class="nav-tooltip">Logout</span>
+                        <div class="collapse" id="collapseExample" style="padding-left:10px";>
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon material-symbols-rounded">account_circle</span>
+                                <span class="nav-label">Profile</span>
+                            </a>
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon material-symbols-rounded">account_circle</span>
+                                <span class="nav-label">Profile</span>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon material-symbols-rounded">logout</span>
+                            <span class="nav-label">Logout</span>
+                        </a>
+                        <span class="nav-tooltip">Logout</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <div style=" margin : 16px 16px 16px 0; border-radius:16px" class="flex-grow-1 bg-light ">
+            @RenderBody()
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="~/js/LayoutAdmin.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
