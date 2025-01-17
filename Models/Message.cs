@@ -12,8 +12,8 @@ namespace Project_ShoeStore_Manager.Models
         [ForeignKey("RoomId")]
         public RoomChat RoomChat { get; set; }
         [Required]
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        [ForeignKey("Id")]
         public User User { get; set; }
         [Required]
         public string Content { get; set; }

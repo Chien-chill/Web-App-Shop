@@ -8,7 +8,7 @@ namespace Project_ShoeStore_Manager.Models
         [Key]
         public int ColorId { get; set; }
         public string ColorName { get; set; }
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
     }

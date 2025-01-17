@@ -8,8 +8,8 @@ namespace Project_ShoeStore_Manager.Models
         [Key]
         public int OrderId { get; set; }
         [Required]
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        [ForeignKey("Id")]
         public virtual User User { get; set; }
         public decimal TotalAmount { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Project_ShoeStore_Manager.Models;
 namespace Project_ShoeStore_Manager.Services
 {
-    public class ShoesDbContext : IdentityDbContext
+    public class ShoesDbContext : IdentityDbContext<User>
     {
         public ShoesDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Banner> Banners { get; set; }

@@ -7,8 +7,8 @@ namespace Project_ShoeStore_Manager.Models
     {
         [Key]
         public int RoomId { get; set; }
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        [ForeignKey("Id")]
         public User User { get; set; }
         public ICollection<Message> Messages { get; set; } = new List<Message>();
     }

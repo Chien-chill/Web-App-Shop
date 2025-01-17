@@ -7,8 +7,8 @@ namespace Project_ShoeStore_Manager.Models
     {
         [Key]
         public int ReceiptId { get; set; }
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        [ForeignKey("Id")]
         public virtual User User { get; set; }
         public int SupplierId { get; set; }
         [ForeignKey("SupplierId")]

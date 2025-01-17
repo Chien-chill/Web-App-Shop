@@ -7,6 +7,9 @@ namespace Project_ShoeStore_Manager.Models
     {
         [Key]
         public int CommentId { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("Id")]
+        public virtual User User { get; set; }
         [Required]
         public string? Content { get; set; }
         public string? Image { get; set; }
