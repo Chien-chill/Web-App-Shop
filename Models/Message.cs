@@ -6,7 +6,7 @@ namespace Project_ShoeStore_Manager.Models
     public class Message
     {
         [Key]
-        public int Id { get; set; }
+        public int MesageId { get; set; }
         [Required]
         public int RoomId { get; set; }
         [ForeignKey("RoomId")]

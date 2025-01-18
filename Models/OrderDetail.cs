@@ -22,6 +22,5 @@ namespace Project_ShoeStore_Manager.Models
         public virtual ProductColor Color { get; set; }
         public int Quantity { get; set; }
         public decimal ProductPrice { get; set; }
-
     }
 }
