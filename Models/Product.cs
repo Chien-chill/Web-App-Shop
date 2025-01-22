@@ -14,6 +14,9 @@ namespace Project_ShoeStore_Manager.Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+        public int BrandId { get; set; }
+        [ForeignKey("BrandId")]
+        public virtual Brand Brand { get; set; }
         public string? ProductDescription { get; set; }
         [Required]
         public decimal PurchasePrice { get; set; }
