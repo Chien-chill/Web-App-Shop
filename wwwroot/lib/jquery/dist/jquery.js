@@ -99,7 +99,7 @@ var document = window.document;
 
 	var preservedScriptAttributes = {
 		type: true,
-		src: true,
+		~src: true,
 		nonce: true,
 		noModule: true
 	};
@@ -255,7 +255,7 @@ jQuery.fn = jQuery.prototype = {
 };
 
 jQuery.extend = jQuery.fn.extend = function() {
-	var options, name, src, copy, copyIsArray, clone,
+	var options, name, ~src, copy, copyIsArray, clone,
 		target = arguments[ 0 ] || {},
 		i = 1,
 		length = arguments.length,
@@ -299,15 +299,15 @@ jQuery.extend = jQuery.fn.extend = function() {
 				// Recurse if we're merging plain objects or arrays
 				if ( deep && copy && ( jQuery.isPlainObject( copy ) ||
 					( copyIsArray = Array.isArray( copy ) ) ) ) {
-					src = target[ name ];
+					~src = target[ name ];
 
 					// Ensure proper type for the source value
-					if ( copyIsArray && !Array.isArray( src ) ) {
+					if ( copyIsArray && !Array.isArray( ~src ) ) {
 						clone = [];
-					} else if ( !copyIsArray && !jQuery.isPlainObject( src ) ) {
+					} else if ( !copyIsArray && !jQuery.isPlainObject( ~src ) ) {
 						clone = {};
 					} else {
-						clone = src;
+						clone = ~src;
 					}
 					copyIsArray = false;
 
@@ -5707,41 +5707,41 @@ jQuery.removeEvent = function( elem, type, handle ) {
 	}
 };
 
-jQuery.Event = function( src, props ) {
+jQuery.Event = function( ~src, props ) {
 
 	// Allow instantiation without the 'new' keyword
 	if ( !( this instanceof jQuery.Event ) ) {
-		return new jQuery.Event( src, props );
+		return new jQuery.Event( ~src, props );
 	}
 
 	// Event object
-	if ( src && src.type ) {
-		this.originalEvent = src;
-		this.type = src.type;
+	if ( ~src && ~src.type ) {
+		this.originalEvent = ~src;
+		this.type = ~src.type;
 
 		// Events bubbling up the document may have been marked as prevented
 		// by a handler lower down the tree; reflect the correct value.
-		this.isDefaultPrevented = src.defaultPrevented ||
-				src.defaultPrevented === undefined &&
+		this.isDefaultPrevented = ~src.defaultPrevented ||
+				~src.defaultPrevented === undefined &&
 
 				// Support: Android <=2.3 only
-				src.returnValue === false ?
+				~src.returnValue === false ?
 			returnTrue :
 			returnFalse;
 
 		// Create target properties
 		// Support: Safari <=6 - 7 only
 		// Target should not be a text node (#504, #13143)
-		this.target = ( src.target && src.target.nodeType === 3 ) ?
-			src.target.parentNode :
-			src.target;
+		this.target = ( ~src.target && ~src.target.nodeType === 3 ) ?
+			~src.target.parentNode :
+			~src.target;
 
-		this.currentTarget = src.currentTarget;
-		this.relatedTarget = src.relatedTarget;
+		this.currentTarget = ~src.currentTarget;
+		this.relatedTarget = ~src.relatedTarget;
 
 	// Event type
 	} else {
-		this.type = src;
+		this.type = ~src;
 	}
 
 	// Put explicitly provided properties onto the event object
@@ -5750,7 +5750,7 @@ jQuery.Event = function( src, props ) {
 	}
 
 	// Create a timestamp if incoming event doesn't have one
-	this.timeStamp = src && src.timeStamp || Date.now();
+	this.timeStamp = ~src && ~src.timeStamp || Date.now();
 
 	// Mark it as fixed
 	this[ jQuery.expando ] = true;
@@ -5984,7 +5984,7 @@ function restoreScript( elem ) {
 	return elem;
 }
 
-function cloneCopyEvent( src, dest ) {
+function cloneCopyEvent( ~src, dest ) {
 	var i, l, type, pdataOld, udataOld, udataCur, events;
 
 	if ( dest.nodeType !== 1 ) {
@@ -5992,8 +5992,8 @@ function cloneCopyEvent( src, dest ) {
 	}
 
 	// 1. Copy private data: events, handlers, etc.
-	if ( dataPriv.hasData( src ) ) {
-		pdataOld = dataPriv.get( src );
+	if ( dataPriv.hasData( ~src ) ) {
+		pdataOld = dataPriv.get( ~src );
 		events = pdataOld.events;
 
 		if ( events ) {
@@ -6008,8 +6008,8 @@ function cloneCopyEvent( src, dest ) {
 	}
 
 	// 2. Copy user data
-	if ( dataUser.hasData( src ) ) {
-		udataOld = dataUser.access( src );
+	if ( dataUser.hasData( ~src ) ) {
+		udataOld = dataUser.access( ~src );
 		udataCur = jQuery.extend( {}, udataOld );
 
 		dataUser.set( dest, udataCur );
@@ -6017,16 +6017,16 @@ function cloneCopyEvent( src, dest ) {
 }
 
 // Fix IE bugs, see support tests
-function fixInput( src, dest ) {
+function fixInput( ~src, dest ) {
 	var nodeName = dest.nodeName.toLowerCase();
 
 	// Fails to persist the checked state of a cloned checkbox or radio button.
-	if ( nodeName === "input" && rcheckableType.test( src.type ) ) {
-		dest.checked = src.checked;
+	if ( nodeName === "input" && rcheckableType.test( ~src.type ) ) {
+		dest.checked = ~src.checked;
 
 	// Fails to return the selected option to the default selected state when cloning options
 	} else if ( nodeName === "input" || nodeName === "textarea" ) {
-		dest.defaultValue = src.defaultValue;
+		dest.defaultValue = ~src.defaultValue;
 	}
 }
 
@@ -6102,11 +6102,11 @@ function domManip( collection, args, callback, ignored ) {
 						!dataPriv.access( node, "globalEval" ) &&
 						jQuery.contains( doc, node ) ) {
 
-						if ( node.src && ( node.type || "" ).toLowerCase()  !== "module" ) {
+						if ( node.~src && ( node.type || "" ).toLowerCase()  !== "module" ) {
 
 							// Optional AJAX dependency, but won't run scripts if not present
 							if ( jQuery._evalUrl && !node.noModule ) {
-								jQuery._evalUrl( node.src, {
+								jQuery._evalUrl( node.~src, {
 									nonce: node.nonce || node.getAttribute( "nonce" )
 								}, doc );
 							}
@@ -6149,7 +6149,7 @@ jQuery.extend( {
 	},
 
 	clone: function( elem, dataAndEvents, deepDataAndEvents ) {
-		var i, l, srcElements, destElements,
+		var i, l, ~srcElements, destElements,
 			clone = elem.cloneNode( true ),
 			inPage = isAttached( elem );
 
@@ -6159,21 +6159,21 @@ jQuery.extend( {
 
 			// We eschew Sizzle here for performance reasons: https://jsperf.com/getall-vs-sizzle/2
 			destElements = getAll( clone );
-			srcElements = getAll( elem );
+			~srcElements = getAll( elem );
 
-			for ( i = 0, l = srcElements.length; i < l; i++ ) {
-				fixInput( srcElements[ i ], destElements[ i ] );
+			for ( i = 0, l = ~srcElements.length; i < l; i++ ) {
+				fixInput( ~srcElements[ i ], destElements[ i ] );
 			}
 		}
 
 		// Copy the events from the original to the clone
 		if ( dataAndEvents ) {
 			if ( deepDataAndEvents ) {
-				srcElements = srcElements || getAll( elem );
+				~srcElements = ~srcElements || getAll( elem );
 				destElements = destElements || getAll( clone );
 
-				for ( i = 0, l = srcElements.length; i < l; i++ ) {
-					cloneCopyEvent( srcElements[ i ], destElements[ i ] );
+				for ( i = 0, l = ~srcElements.length; i < l; i++ ) {
+					cloneCopyEvent( ~srcElements[ i ], destElements[ i ] );
 				}
 			} else {
 				cloneCopyEvent( elem, clone );
@@ -9107,13 +9107,13 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 // A special extend for ajax options
 // that takes "flat" options (not to be deep extended)
 // Fixes #9887
-function ajaxExtend( target, src ) {
+function ajaxExtend( target, ~src ) {
 	var key, deep,
 		flatOptions = jQuery.ajaxSettings.flatOptions || {};
 
-	for ( key in src ) {
-		if ( src[ key ] !== undefined ) {
-			( flatOptions[ key ] ? target : ( deep || ( deep = {} ) ) )[ key ] = src[ key ];
+	for ( key in ~src ) {
+		if ( ~src[ key ] !== undefined ) {
+			( flatOptions[ key ] ? target : ( deep || ( deep = {} ) ) )[ key ] = ~src[ key ];
 		}
 	}
 	if ( deep ) {
@@ -10172,7 +10172,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 			send: function( _, complete ) {
 				script = jQuery( "<script>" )
 					.attr( s.scriptAttrs || {} )
-					.prop( { charset: s.scriptCharset, src: s.url } )
+					.prop( { charset: s.scriptCharset, ~src: s.url } )
 					.on( "load error", callback = function( evt ) {
 						script.remove();
 						callback = null;

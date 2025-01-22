@@ -51,13 +51,13 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8e36132-9b72-48c0-bb5d-b05883695682",
+                            Id = "aa42e6a3-88c3-4a97-a0b7-ffe4aefa71b9",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "9cfc9e3d-5038-4eed-9aa1-b5f767e157ba",
+                            Id = "f098a7d3-ef03-4385-9a8e-de6da96abdbd",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -116,10 +116,12 @@ namespace Project_ShoeStore_Manager.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -156,10 +158,12 @@ namespace Project_ShoeStore_Manager.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -386,6 +390,9 @@ namespace Project_ShoeStore_Manager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -410,6 +417,8 @@ namespace Project_ShoeStore_Manager.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
@@ -872,11 +881,19 @@ namespace Project_ShoeStore_Manager.Migrations
 
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Product", b =>
                 {
+                    b.HasOne("Project_ShoeStore_Manager.Models.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Project_ShoeStore_Manager.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Category");
                 });
@@ -1000,6 +1017,11 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Size");
+                });
+
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.Brand", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Product", b =>
