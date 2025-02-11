@@ -1,4 +1,4 @@
-﻿ @model List<Product>
+﻿ @model IEnumerable<Product>
  @{
 
  }
@@ -14,10 +14,13 @@
 					<nav aria-label="breadcrumb" role="navigation">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">
-								<a href="index.html">Quản Lý Sản Phẩm</a>
+								Quản Lý Sản Phẩm
 							</li>
 							<li class="breadcrumb-item active" aria-current="page">
 								Danh Sách Sản Phẩm
+							</li>
+							<li class="breadcrumb-item" aria-current="page">
+								<a asp-controller="Products" asp-action="Create">Thêm Sản Phẩm</a>
 							</li>
 						</ol>
 					</nav>
@@ -39,9 +42,9 @@
 							<th>Tên Sản Phẩm </th>
 							<th>Tên Nhãn Hàng</th>
 							<th>Loại Sản Phẩm</th>
+							<th>Giá Nhập (VND)</th>
+							<th>Lợi Nhuận (%)</th>
 							<th>Mô Tả Sản Phẩm</th>
-							<th>Giá Nhập</th>
-							<th>Lợi Nhuận</th>
 							<th class="datatable-nosort">Action</th>
 						</tr>
 					</thead>
@@ -53,9 +56,9 @@
 							<td>@Product.ProductName</td>
 							<td>@Product.Brand.BrandName</td>
 							<td>@Product.Category.CategoryName</td>
-							<td>@Product.ProductDescription</td>
 							<td>@Product.PurchasePrice</td>
 							<td>@Product.ProfitMargin</td>
+							<td>@Product.ProductDescription</td>
 							<td>
 								<div class="dropdown">
 									<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -75,3 +78,7 @@
 						}
 					</tbody>
 				</table>
+			</div>
+		</div>
+	</div>
+</div>
