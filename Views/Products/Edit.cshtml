@@ -4,25 +4,24 @@
 <!-- ImagesLoader css -->
 <link rel="stylesheet" href="~/src/plugins/jquery-ImagesLoader/jquery.imagesloader.css" />
 <!-- jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
 <!-- Bootstrap js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <!-- Font awesome -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" crossorigin="anonymous"></script>
 <!-- ImagesLoader js -->
-<script src="/src/plugins/jquery-ImagesLoader/jquery.imagesloader-1.0.1.js" asp-append-version="true"></script>
+<script src="/src/plugins/jquery-ImagesLoader/jquery.imagesloader-1.0.1.js"></script>
 <script>
-	var $j = jQuery.noConflict(true); // Giữ lại jQuery 3.6.0 mà không ghi đè phiên bản cũ
-	 $j(document).ready(function () {
-		var auctionImages = @Html.Raw(JsonSerializer.Serialize(Model.ProductImagesUrl.Select(url => new { Url = url })));
+	 var $j = jQuery.noConflict(true);
+	var auctionImages = @Html.Raw(JsonSerializer.Serialize(Model.ProductImagesUrl.Select(url => new { Url = url })));
+	$j(document).ready(function () {
 	  var imagesloader = $j('[data-type=imagesloader]').imagesloader({
 		maxFiles: 5
 		, minSelect: 1
 		, imagesToLoad: auctionImages
+		  });
 	  });
-	 });
 </script>
-@* @Html.Raw(JsonSerializer.Serialize(Model.ProductImagesUrl.Select(url => new { Url = url }))); *@
 <div class="pd-ltr-20 xs-pd-20-10">
 	<div class="min-height-200px">
 		<div class="page-header">

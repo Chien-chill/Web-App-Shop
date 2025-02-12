@@ -1148,17 +1148,6 @@ function drawRotated(img,degree) {
     }
 
     $(document).ready(function () {
-
-      //Image loader var to use when you need a function from object
-        var auctionImages = null;
-
-      // Create image loader plugin
-      var imagesloader = $('[data-type=imagesloader]').imagesloader({
-        maxFiles: 5
-        , minSelect: 1
-        , imagesToLoad: auctionImages
-      });
-
         $("#submit").click(function (event) {
             //event.preventDefault(); // Ngăn chặn form submit mặc định
 

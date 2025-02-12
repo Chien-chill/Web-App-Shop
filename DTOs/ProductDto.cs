@@ -20,7 +20,6 @@ namespace Project_ShoeStore_Manager.DTOs
         public string ProductSizes { get; set; }
         [Required]
         public string ProductColors { get; set; }
-        [Required]
         public List<IFormFile> ProductImages { get; set; }
         public List<string> ProductImagesUrl { get; set; } = new List<string>();
     }

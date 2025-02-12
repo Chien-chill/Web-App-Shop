@@ -10,8 +10,20 @@
 <!-- Font awesome -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" crossorigin="anonymous"></script>
 <!-- ImagesLoader js -->
-<script src="~/src/plugins/jquery-ImagesLoader/jquery.imagesloader-1.0.1.js" asp-append-version="true"></script>
-
+<script src="/src/plugins/jquery-ImagesLoader/jquery.imagesloader-1.0.1.js"></script>
+<script>
+	 var $j = jQuery.noConflict(true);
+	var auctionImages = null;
+	$j(document).ready(function () {
+	  //Image loader var to use when you need a function from object
+	  // Create image loader plugin
+	  var imagesloader = $j('[data-type=imagesloader]').imagesloader({
+		maxFiles: 5
+		, minSelect: 1
+		, imagesToLoad: auctionImages
+		  });
+	  });
+</script>
 <div class="pd-ltr-20 xs-pd-20-10">
 	<div class="min-height-200px">
 		<div class="page-header">
