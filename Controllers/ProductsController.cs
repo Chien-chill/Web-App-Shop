@@ -135,29 +135,33 @@ namespace Project_ShoeStore_Manager.Controllers
             return View(productDto);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, ProductDto productDto)
+        public async Task<IActionResult> Edit(int id, [FromForm] ProductDto productDto)
         {
             var product = await context.Products
                         .Include(p => p.ProductSizes)  // Lấy danh sách size
                         .Include(p => p.ProductColors) // Lấy danh sách màu
                         .Include(p => p.ProductImages) // Lấy danh sách hình ảnh
                         .FirstOrDefaultAsync(p => p.ProductId == id);
+
             if (product == null)
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                product.ProductName = productDto.ProductName;
-                product.BrandId = productDto.BrandId;
-                product.CategoryId = productDto.CategoryId;
-                product.PurchasePrice = productDto.PurchasePrice;
-                product.ProfitMargin = productDto.ProfitMargin;
-
-                await context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                ViewData["ProductId"] = product.ProductId.ToString();
+                ViewData["BrandId"] = new SelectList(context.Brands, "BrandId", "BrandName", productDto.BrandId);
+                ViewData["CategoryId"] = new SelectList(context.Categories, "CategoryId", "CategoryName", productDto.CategoryId);
+                return View(productDto);
             }
-            return View(productDto);
+            product.ProductName = productDto.ProductName;
+            product.BrandId = productDto.BrandId;
+            product.CategoryId = productDto.CategoryId;
+            product.PurchasePrice = productDto.PurchasePrice;
+            product.ProfitMargin = productDto.ProfitMargin;
+
+            await context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult> Delete(int id)

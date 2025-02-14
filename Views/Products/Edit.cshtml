@@ -20,7 +20,7 @@
 		, minSelect: 1
 		, imagesToLoad: auctionImages
 		  });
-	  });
+		});
 </script>
 <div class="pd-ltr-20 xs-pd-20-10">
 	<div class="min-height-200px">
@@ -206,3 +206,12 @@
 		</form>
 	</div>
 </div>
+@if (!ViewData.ModelState.IsValid)
+{
+	<div class="alert alert-danger">
+		@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+		{
+			<p>@error.ErrorMessage</p>
+		}
+	</div>
+}

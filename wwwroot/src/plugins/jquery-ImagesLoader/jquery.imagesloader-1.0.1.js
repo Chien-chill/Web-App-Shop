@@ -219,7 +219,11 @@ function drawRotated(img,degree) {
 
     return canvas.toDataURL();
   }
-
+function urlToFile(url, filename, mimeType) {
+    return fetch(url)
+        .then(response => response.blob())
+        .then(blob => new File([blob], filename, { type: mimeType }));
+}
 // #endregion
 
   + function ($) {
@@ -365,6 +369,7 @@ function drawRotated(img,degree) {
           , FileSizeInBytes: file.size
           , File: file
         });
+		  console.log("AttachmentArray:", self.AttachmentArray);
 
         // Instantiate a FileReader object to read its contents into memory
         var fileReader = new FileReader();
@@ -834,7 +839,7 @@ function drawRotated(img,degree) {
 
       return retVal;
     }
-
+    
     // Load images
     ImagesLoader.prototype.LoadImages = function () {
 
@@ -861,7 +866,7 @@ function drawRotated(img,degree) {
 
           var src = imageToFormat(this, options.maxWidth, options.maxHeight, options.imgType, options.imgQuality);
           var base64 = src.split("base64,")[1];
-
+          let file =  urlToFile(url, name, options.imgType);
           self.AttachmentArray.push({
             AttachmentType: 1
             , ObjectType: 1
@@ -871,7 +876,7 @@ function drawRotated(img,degree) {
             , MimeType: options.imgType
             , Base64: base64
             , FileSizeInBytes: base64.length
-            , File: null
+            , File: file
           });
 
           self.RenderThumbnail(url, name, main, true);
@@ -1152,12 +1157,11 @@ function drawRotated(img,degree) {
             //event.preventDefault(); // Ngăn chặn form submit mặc định
 
             var self = $('[data-type=imagesloader]').data('format.imagesloader');
-
+           console.log("AttachmentArray:", self.AttachmentArray);
             if (!self) {
                 console.log("ImagesLoader chưa được khởi tạo.");
                 return;
             }
-
             if (self.AttachmentArray.length === 0) {
                 alert("Vui lòng tải lên ít nhất một hình ảnh!");
                 return;
