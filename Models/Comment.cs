@@ -17,7 +17,7 @@ namespace Project_ShoeStore_Manager.Models
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
         public string Star { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     }
 }

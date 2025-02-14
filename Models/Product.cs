@@ -23,7 +23,7 @@ namespace Project_ShoeStore_Manager.Models
         [Required]
         public decimal ProfitMargin { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public DateTime CreateAt { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.Now;
         public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
         public virtual ICollection<ProductSize> ProductSizes { get; set; } = new List<ProductSize>();
         public virtual ICollection<ProductColor> ProductColors { get; set; } = new List<ProductColor>();

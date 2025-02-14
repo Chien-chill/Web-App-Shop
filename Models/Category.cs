@@ -6,6 +6,9 @@ namespace Project_ShoeStore_Manager.Models
     {
         [Key]
         public int CategoryId { get; set; }
+        [Required]
         public string CategoryName { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public ICollection<Product> Product { get; set; } = new List<Product>();
     }
 }

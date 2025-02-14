@@ -1,8 +1,7 @@
-﻿ @model List<Product>
+﻿ @model IEnumerable<Product>
  @{
 
  }
-
 <div class="pd-ltr-20 xs-pd-20-10">
 	<div class="min-height-200px">
 		<div class="page-header">
@@ -14,10 +13,13 @@
 					<nav aria-label="breadcrumb" role="navigation">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">
-								<a href="index.html">Quản Lý Sản Phẩm</a>
+								Quản Lý Sản Phẩm
 							</li>
 							<li class="breadcrumb-item active" aria-current="page">
 								Danh Sách Sản Phẩm
+							</li>
+							<li class="breadcrumb-item" aria-current="page">
+								<a asp-controller="Products" asp-action="Create">Thêm Sản Phẩm</a>
 							</li>
 						</ol>
 					</nav>
@@ -39,9 +41,9 @@
 							<th>Tên Sản Phẩm </th>
 							<th>Tên Nhãn Hàng</th>
 							<th>Loại Sản Phẩm</th>
+							<th>Giá Nhập (VND)</th>
+							<th>Lợi Nhuận (%)</th>
 							<th>Mô Tả Sản Phẩm</th>
-							<th>Giá Nhập</th>
-							<th>Lợi Nhuận</th>
 							<th class="datatable-nosort">Action</th>
 						</tr>
 					</thead>
@@ -53,9 +55,9 @@
 							<td>@Product.ProductName</td>
 							<td>@Product.Brand.BrandName</td>
 							<td>@Product.Category.CategoryName</td>
-							<td>@Product.ProductDescription</td>
 							<td>@Product.PurchasePrice</td>
 							<td>@Product.ProfitMargin</td>
+							<td>@Product.ProductDescription</td>
 							<td>
 								<div class="dropdown">
 									<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -67,11 +69,55 @@
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 										<a class="dropdown-item" asp-controller="Products" asp-action="Detail" asp-route-id="@Product.ProductId"><i class="dw dw-eye"></i> View</a>
 										<a class="dropdown-item" asp-controller="Products" asp-action="Edit" asp-route-id="@Product.ProductId"><i class="dw dw-edit2"></i> Edit</a>
-										<a class="dropdown-item" asp-controller="Products" asp-action="Delete" asp-route-id="@Product.ProductId"><i class="dw dw-delete-3"></i> Delete</a>
+										<a data-toggle="modal" data-target="#confirmation-modal" class="dropdown-item"><i class="dw dw-delete-3"></i> Delete</a>
+									    
 									</div>
 								</div>
+									<div class="modal fade"
+										 id="confirmation-modal"
+										 tabindex="-1"
+										 role="dialog"
+										 aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											 role="document">
+											<div class="modal-content">
+												<div class="modal-body text-center font-18">
+													<h4 class="padding-top-30 mb-30 weight-500">
+														Are you sure you want to delete? @Product.ProductId
+													</h4>
+													<div class="padding-bottom-30 row"
+														 style="max-width: 170px; margin: 0 auto">
+														<div class="col-6">
+															<button type="button"
+																	class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+																	data-dismiss="modal">
+																<i class="fa fa-times"></i>
+															</button>
+															NO
+														</div>
+														<div class="col-6">
+															<form  asp-controller="Products" asp-action="Delete" asp-route-id="@Product.ProductId" method="post">
+															<button type="submit"
+																	id="sa-custom-position"
+																	class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+															>
+																<i class="fa fa-check"></i>
+															</button>
+															</form>
+															YES
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 							</td>
 						</tr>
 						}
 					</tbody>
 				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
