@@ -45,15 +45,15 @@ namespace Project_ShoeStore_Manager.Controllers
             {
                 try
                 {
-                    Product product = new Product();
+                    Product product = new Product()
                     {
-                        product.ProductName = productDto.ProductName;
-                        product.BrandId = productDto.BrandId;
-                        product.CategoryId = productDto.CategoryId;
-                        product.ProductDescription = productDto.ProductDescription;
-                        product.PurchasePrice = productDto.PurchasePrice;
-                        product.ProfitMargin = productDto.ProfitMargin;
-                    }
+                        ProductName = productDto.ProductName,
+                        BrandId = productDto.BrandId,
+                        CategoryId = productDto.CategoryId,
+                        ProductDescription = productDto.ProductDescription,
+                        PurchasePrice = productDto.PurchasePrice,
+                        ProfitMargin = productDto.ProfitMargin
+                    };
 
                     product.ProductSizes = productDto.ProductSizes.Split(',', StringSplitOptions.RemoveEmptyEntries)
                                                           .Select(size => new ProductSize()
@@ -166,6 +166,10 @@ namespace Project_ShoeStore_Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var product = await context.Products
                            .Include(p => p.ProductImages)
                            .FirstOrDefaultAsync(p => p.ProductId == id);

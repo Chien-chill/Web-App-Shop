@@ -1,0 +1,114 @@
+﻿ @model IEnumerable<Supplier>
+@{
+
+}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<div class="page-header">
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					@* <div class="title"> *@
+					@* 	<h4>Danh Sách Sản Phẩm</h4> *@
+					@* </div> *@
+					<nav aria-label="breadcrumb" role="navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								Quản Lý Nhà Cung Cấp
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">
+								Danh Sách Nhà Cung Cấp
+							</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<!-- Simple Datatable start -->
+		<div class="card-box mb-30">
+			<div class="pd-20">
+				<h4 class="text-blue h4">Danh Sách Nhà Cung Cấp</h4>
+				<a class="text-primary" asp-controller="Suppliers" asp-action="Create">Thêm Mới</a>
+			</div>
+			<div class="pb-20">
+				<table class="data-table table stripe hover nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">Mã Nhà Cung Cấp</th>
+							<th>Tên Nhà Cung Cấp </th>
+							<th>Địa Chỉ</th>
+							<th>Số Điện Thoại</th>
+							<th>Email</th>
+							<th class="datatable-nosort">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var Supplier in Model)
+						{
+							<tr>
+								<td class="table-plus">@Supplier.SupplierId</td>
+								<td>@Supplier.SupplierName</td>
+								<td>@Supplier.Address</td>
+								<td>@Supplier.PhoneNumber</td>
+								<td>@Supplier.Email</td>
+								<td>
+									<div class="dropdown">
+										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+										   href="#"
+										   role="button"
+										   data-toggle="dropdown">
+											<i class="dw dw-more"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+											<a class="dropdown-item" asp-controller="Suppliers" asp-action="Edit" asp-route-id="@Supplier.SupplierId"><i class="dw dw-edit2"></i> Chỉnh Sửa</a>
+											<a data-toggle="modal" data-target="#confirmation-modal" class="dropdown-item"><i class="dw dw-delete-3"></i> Xóa</a>
+
+										</div>
+									</div>
+									<div class="modal fade"
+										 id="confirmation-modal"
+										 tabindex="-1"
+										 role="dialog"
+										 aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											 role="document">
+											<div class="modal-content">
+												<div class="modal-body text-center font-18">
+													<h4 class="padding-top-30 mb-30 weight-500">
+														Are you sure you want to delete? @Supplier.SupplierId
+													</h4>
+													<div class="padding-bottom-30 row"
+														 style="max-width: 170px; margin: 0 auto">
+														<div class="col-6">
+															<button type="button"
+																	class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+																	data-dismiss="modal">
+																<i class="fa fa-times"></i>
+															</button>
+															NO
+														</div>
+														<div class="col-6">
+															<form asp-controller="Suppliers" asp-action="Delete" asp-route-id="@Supplier.SupplierId" method="post">
+																<button type="submit"
+																		id="sa-custom-position"
+																		class="btn btn-primary border-radius-100 btn-block confirmation-btn">
+																	<i class="fa fa-check"></i>
+																</button>
+															</form>
+															YES
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
