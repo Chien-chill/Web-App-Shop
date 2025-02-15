@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Project_ShoeStore_Manager.Models
+namespace Project_ShoeStore_Manager.DTOs
+
 {
-    public class Supplier
+    public class SupplierDto
     {
-        [Key]
-        public int SupplierId { get; set; }
         [Required]
         public string SupplierName { get; set; }
         [Required]
@@ -14,7 +13,5 @@ namespace Project_ShoeStore_Manager.Models
         public string PhoneNumber { get; set; }
         [Required]
         public string Email { get; set; }
-        public bool isDeleted { get; set; } = false;
-        public virtual ICollection<Receipt> Receipt { get; set; } = new List<Receipt>();
     }
 }

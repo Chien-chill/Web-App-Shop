@@ -1,0 +1,84 @@
+﻿@model Project_ShoeStore_Manager.DTOs.SupplierDto
+@{
+}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<div class="page-header">
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					@* <div class="title"> *@
+					@* 	<h4>Danh Sách Sản Phẩm</h4> *@
+					@* </div> *@
+					<nav aria-label="breadcrumb" role="navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								Quản Lý Nhà Cung Cấp
+
+							</li>
+							<li class="breadcrumb-item" aria-current="page">
+								<a asp-controller="Suppliers" asp-action="Index">Danh Sách Nhà Cung Cấp</a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">
+								Sửa Nhà Cung Cấp Mã : @ViewData["SupplierId"]
+							</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<!-- Simple Datatable start -->
+		<form id="frm" method="post" enctype="multipart/form-data" class="needs-validation" novalidate="">
+			<div class="row">
+				<div class="col-md-4 col-sm-12">
+					<div class="form-group">
+						<label>Tên Nhà Cung Cấp: </label>
+						<input type="text" class="form-control" asp-for="SupplierName">
+						<span asp-validation-for="SupplierName" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12">
+					<div class="form-group">
+						<label>Địa Chỉ: </label>
+						<input type="text" class="form-control" asp-for="Address">
+						<span asp-validation-for="Address" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12">
+					<div class="form-group">
+						<label>Số Điện Thoại: </label>
+						<input type="number" class="form-control" asp-for="PhoneNumber">
+						<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="form-group">
+						<label>Email: </label>
+						<input class="form-control" type="email" asp-for="Email" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						<button id="submit" type="submit" class="btn btn-primary">Xác Nhận</button>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						<a class="btn btnbtn-outline-primary" asp-controller="Suppliers" asp-action="Index">Hủy</a>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+
+
+

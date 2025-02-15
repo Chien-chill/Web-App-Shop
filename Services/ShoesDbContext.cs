@@ -32,6 +32,7 @@ namespace Project_ShoeStore_Manager.Services
         public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
         public DbSet<RoomChat> RoomChats { get; set; }
         public DbSet<Storage> Storages { get; set; }
+        public DbSet<Project_ShoeStore_Manager.Models.Supplier> Supplier { get; set; } = default!;
 
     }
 }
