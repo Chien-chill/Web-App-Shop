@@ -17,7 +17,7 @@ namespace Project_ShoeStore_Manager.Models
         public User User { get; set; }
         [Required]
         public string Content { get; set; }
-        public DateTime TimeStamp { get; set; }
+        public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
         public bool IsRead { get; set; } = false;
     }
 }

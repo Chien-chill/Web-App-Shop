@@ -21,7 +21,7 @@ namespace Project_ShoeStore_Manager.Models
         [Required]
         public decimal PurchasePrice { get; set; }
         [Required]
-        public decimal ProfitMargin { get; set; }
+        public decimal SellingPrice { get; set; }
         public bool IsDeleted { get; set; } = false;
         public DateTime CreateAt { get; set; } = DateTime.Now;
         public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();

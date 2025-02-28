@@ -1,0 +1,119 @@
+﻿@model Project_ShoeStore_Manager.DTOs.ProductDto
+@{
+}
+
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<div class="page-header">
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="title">
+						<h4>Chi Tiết Sản Phẩm</h4>
+					</div>
+					<nav aria-label="breadcrumb" role="navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								Quản Lý Sản Phẩm
+							</li>
+							<li class="breadcrumb-item" aria-current="page">
+								<a asp-controller="Products" asp-action="Index">Danh Sách Sản Phẩm</a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">
+								Chi Tiết Sản Phẩm Mã: @ViewData["ProductId"]
+							</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<div class="product-wrap">
+			<div class="product-detail-wrap mb-30">
+				<div class="row">
+					<div class="col-lg-6 col-md-12 col-sm-12">
+						<div class="product-slider slider-arrow">
+							@foreach(var image in Model.ProductImagesUrl)
+							{
+								<div class="product-slide">
+									<img src="@image" alt="" />
+								</div>
+							}
+						</div>
+						<div class="product-slider-nav">
+							@foreach (var image in Model.ProductImagesUrl)
+							{
+								<div class="product-slide-nav">
+									<img src="@image" alt="" />
+								</div>
+							}
+						</div>
+					</div>
+					
+					<div class="col-lg-6 col-md-12 col-sm-12">
+						<div class="product-detail-desc pd-20 card-box height-100-p">
+							<h4 class="mb-20 pt-20 text-center">@Model.ProductName</h4>
+								<dl class="row">
+									<dt class="col-sm-3">Loại:</dt>
+									<dd class="col-sm-9">
+										@ViewData["CategoryName"]
+									</dd>
+
+									<dt class="col-sm-3">Nhãn Hàng:</dt>
+									<dd class="col-sm-9">
+										<p>
+											@ViewData["BrandName"]
+										</p>
+									</dd>
+
+									<dt class="col-sm-3">Size:</dt>
+									<dd class="col-sm-9">
+										@Model.ProductSizes
+									</dd>
+
+									<dt class="col-sm-3">Màu Sắc:</dt>
+									<dd class="col-sm-9">
+										@Model.ProductColors
+									</dd>
+									<dt class="col-sm-3">Giá Nhập:</dt>
+									<dd class="col-sm-9 price">
+										@Model.PurchasePrice VND
+									</dd>
+
+									<dt class="col-sm-3">
+										Giá Bán:
+									</dt>
+									<dd class="col-sm-9">
+										@Model.SellingPrice VND
+									</dd>
+
+									<dt class="col-sm-3">Mô Tả:</dt>
+									<dd class="col-sm-9">
+										@Model.ProductDescription
+									</dd>
+
+									<dt class="col-sm-3">Ngày Tạo:</dt>
+									<dd class="col-sm-9">
+									@ViewData["CreateAt"]
+									</dd>
+								</dl>
+							<div class="row">
+								<div class="col-md-6 col-6">
+									<a class="btn btn-primary btn-block" asp-controller="Products" asp-action="Edit" asp-route-id="@ViewData["ProductId"]">Sửa Ngay</a>
+								</div>
+								<div class="col-md-6 col-6">
+									<a class="btn btn-outline-primary btn-block" asp-controller="Products" asp-action="Index">Quay Lại</a>
+								</div>
+							</div>
+						</div>
+
+						
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+
+

@@ -17,6 +17,7 @@ namespace Project_ShoeStore_Manager.Controllers
             this.context = context;
             this.environment = environment;
         }
+        // Các Controller Trong Phần Layout Admin
         public async Task<IActionResult> Index()
         {
             var products = await context.Products
@@ -52,7 +53,7 @@ namespace Project_ShoeStore_Manager.Controllers
                         CategoryId = productDto.CategoryId,
                         ProductDescription = productDto.ProductDescription,
                         PurchasePrice = productDto.PurchasePrice,
-                        ProfitMargin = productDto.ProfitMargin
+                        SellingPrice = productDto.SellingPrice
                     };
 
                     product.ProductSizes = productDto.ProductSizes.Split(',', StringSplitOptions.RemoveEmptyEntries)
@@ -116,7 +117,7 @@ namespace Project_ShoeStore_Manager.Controllers
             ProductDto productDto = new ProductDto();
             {
                 productDto.ProductName = product.ProductName;
-                productDto.ProfitMargin = product.ProfitMargin;
+                productDto.SellingPrice = product.SellingPrice;
                 productDto.PurchasePrice = product.PurchasePrice;
                 productDto.ProductDescription = product.ProductDescription;
                 productDto.BrandId = product.BrandId;
@@ -158,7 +159,7 @@ namespace Project_ShoeStore_Manager.Controllers
             product.BrandId = productDto.BrandId;
             product.CategoryId = productDto.CategoryId;
             product.PurchasePrice = productDto.PurchasePrice;
-            product.ProfitMargin = productDto.ProfitMargin;
+            product.SellingPrice = productDto.SellingPrice;
 
             await context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -187,6 +188,48 @@ namespace Project_ShoeStore_Manager.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var product = await context.Products
+                        .Include(p => p.Brand)
+                        .Include(p => p.Category)
+                        .Include(p => p.ProductSizes)  // Lấy danh sách size
+                        .Include(p => p.ProductColors) // Lấy danh sách màu
+                        .Include(p => p.ProductImages) // Lấy danh sách hình ảnh
+                        .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ProductDto productDto = new ProductDto();
+            {
+                productDto.ProductName = product.ProductName;
+                productDto.SellingPrice = product.SellingPrice;
+                productDto.PurchasePrice = product.PurchasePrice;
+                productDto.ProductDescription = product.ProductDescription;
+                productDto.BrandId = product.BrandId;
+                productDto.CategoryId = product.CategoryId;
+                productDto.ProductColors = string.Join(", ", product.ProductColors.Select(pc => pc.ColorName));
+                productDto.ProductSizes = string.Join(", ", product.ProductSizes.Select(ps => ps.SizeName));
+                foreach (var pi in product.ProductImages)
+                {
+                    string ImagePath = "/uploads/" + pi.ImageFileName;
+                    productDto.ProductImagesUrl.Add(ImagePath);
+                }
+            }
+            ViewData["ProductId"] = product.ProductId;
+            ViewData["BrandName"] = product.Brand.BrandName;
+            ViewData["CategoryName"] = product.Category.CategoryName;
+            ViewData["CreateAt"] = product.CreateAt.ToString();
+            return View(productDto);
+        }
+
     }
 }
 
