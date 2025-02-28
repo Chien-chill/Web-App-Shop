@@ -399,10 +399,10 @@ namespace Project_ShoeStore_Manager.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("ProfitMargin")
+                    b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("PurchasePrice")
+                    b.Property<decimal>("SellingPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId");
@@ -927,7 +927,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         .HasForeignKey("Id");
 
                     b.HasOne("Project_ShoeStore_Manager.Models.Supplier", "Supplier")
-                        .WithMany()
+                        .WithMany("Receipt")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1030,6 +1030,11 @@ namespace Project_ShoeStore_Manager.Migrations
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.RoomChat", b =>
                 {
                     b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.Supplier", b =>
+                {
+                    b.Navigation("Receipt");
                 });
 #pragma warning restore 612, 618
         }

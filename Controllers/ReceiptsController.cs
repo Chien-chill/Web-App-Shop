@@ -21,13 +21,6 @@ namespace Project_ShoeStore_Manager.Controllers
 
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Create()
-        {
-            if (!ModelState.IsValid)
-            {
 
-            }
-
-        }
     }
+}

@@ -1,27 +1,46 @@
-using Microsoft.AspNetCore.Mvc;
-using Project_ShoeStore_Manager.Models;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Project_ShoeStore_Manager.Services;
 
 namespace Project_ShoeStore_Manager.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ShoesDbContext context;
+        public HomeController(ShoesDbContext context)
         {
-            _logger = logger;
+            this.context = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var products = await context.Products.Select(p => new
+            {
+                p.ProductId,
+                p.ProductName,
+                p.SellingPrice,
+                MainImage = "/uploads/" + p.ProductImages.FirstOrDefault(image => image.IsMainImage).ImageFileName
+            }).ToListAsync();
+            return View(products);
+        }
+        public async Task<IActionResult> ProductDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var product = await context.Products
+                        .Include(p => p.Brand)
+                        .Include(p => p.Category)
+                        .Include(p => p.ProductSizes)  // Lấy danh sách size
+                        .Include(p => p.ProductColors) // Lấy danh sách màu
+                        .Include(p => p.ProductImages) // Lấy danh sách hình ảnh
+                        .FirstOrDefaultAsync(p => p.ProductId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

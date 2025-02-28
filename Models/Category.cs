@@ -9,6 +9,7 @@ namespace Project_ShoeStore_Manager.Models
         [Required]
         public string CategoryName { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public ICollection<Product> Product { get; set; } = new List<Product>();
     }
 }

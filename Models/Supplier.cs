@@ -15,6 +15,7 @@ namespace Project_ShoeStore_Manager.Models
         [Required]
         public string Email { get; set; }
         public bool isDeleted { get; set; } = false;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public virtual ICollection<Receipt> Receipt { get; set; } = new List<Receipt>();
     }
 }

@@ -15,7 +15,7 @@ namespace Project_ShoeStore_Manager.DTOs
         [Required]
         public decimal PurchasePrice { get; set; }
         [Required]
-        public decimal ProfitMargin { get; set; }
+        public decimal SellingPrice { get; set; }
         [Required]
         public string ProductSizes { get; set; }
         [Required]

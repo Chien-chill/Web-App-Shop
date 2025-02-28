@@ -13,9 +13,6 @@ namespace Project_ShoeStore_Manager.Models
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
-        public int ImageId { get; set; }
-        [ForeignKey("ImageId")]
-        public virtual ProductImage ProductImage { get; set; }
         public int ColorId { get; set; }
         [ForeignKey("ColorId")]
         public virtual ProductColor ProductColor { get; set; }

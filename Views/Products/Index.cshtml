@@ -7,9 +7,9 @@
 		<div class="page-header">
 			<div class="row">
 				<div class="col-md-6 col-sm-12">
-					@* <div class="title"> *@
-					@* 	<h4>Danh Sách Sản Phẩm</h4> *@
-					@* </div> *@
+					 <div class="title"> 
+					 	<h4>Danh Sách Sản Phẩm</h4> 
+					 </div> 
 					<nav aria-label="breadcrumb" role="navigation">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">
@@ -23,12 +23,10 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- Simple Datatable start -->
 		<div class="card-box mb-30">
 			<div class="pd-20">
-				<h4 class="text-blue h4">Danh Sách Sản Phẩm</h4>
-					<a class="text-primary" asp-controller="Products" asp-action="Create">Thêm Mới</a>
+				<a type="button" class="btn btn-outline-primary" asp-controller="Products" asp-action="Create">Thêm Mới</a>
 			</div>
 			<div class="pb-20">
 				<table class="data-table table stripe hover nowrap">
@@ -39,7 +37,7 @@
 							<th>Tên Nhãn Hàng</th>
 							<th>Loại Sản Phẩm</th>
 							<th>Giá Nhập (VND)</th>
-							<th>Lợi Nhuận (%)</th>
+							<th>Giá Bán (VND)</th>
 							<th>Mô Tả Sản Phẩm</th>
 							<th class="datatable-nosort">Action</th>
 						</tr>
@@ -53,7 +51,7 @@
 							<td>@Product.Brand.BrandName</td>
 							<td>@Product.Category.CategoryName</td>
 							<td>@Product.PurchasePrice</td>
-							<td>@Product.ProfitMargin</td>
+							<td>@Product.SellingPrice</td>
 							<td>@Product.ProductDescription</td>
 							<td>
 								<div class="dropdown">
