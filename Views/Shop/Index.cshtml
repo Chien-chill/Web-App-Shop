@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<dynamic>
+﻿@model X.PagedList.IPagedList<Product>
 @using X.PagedList.Mvc.Core
 @{
 }
@@ -40,7 +40,7 @@
             <div class="categoryitem-wrapper">
                 <div class="categoryitem-wrapper-itembox">
                     <h6>Loại Sản Phẩm</h6>
-                    <select  asp-items="ViewBag.CategoryId"></select>
+                    <select asp-items="ViewBag.CategoryId"></select>
                 </div>
                 <div class="categoryitem-wrapper-itembox">
                     <h6>Nhãn Hàng</h6>
@@ -77,43 +77,43 @@
             {
                 <div class="col-md-4 col-sm-6">
                     <div class="product-item">
-                    <div class="product-item-image">
+                        <div class="product-item-image">
                             <a asp-controller="Home" asp-action="ProductDetail" asp-route-id="@product.ProductId">
-                                <img src="@product.MainImage" alt="Product Name"
+                                <img src="/uploads/@product.ProductImages.FirstOrDefault()?.ImageFileName" alt="Product Name"
                                      class="img-fluid">
                             </a>
-                        <div class="cart-icon">
-                            <a href="#"><i class="far fa-heart"></i></a>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75"
-                                     viewBox="0 0 16.75 16.75">
-                                    <g id="Your_Bag" data-name="Your Bag" transform="translate(0.75)">
-                                        <g id="Icon" transform="translate(0 1)">
-                                            <ellipse id="Ellipse_2" data-name="Ellipse 2" cx="0.682" cy="0.714"
-                                                     rx="0.682" ry="0.714" transform="translate(4.773 13.571)"
-                                                     fill="none" stroke="#1a2224" stroke-linecap="round"
-                                                     stroke-linejoin="round" stroke-width="1.5" />
-                                            <ellipse id="Ellipse_3" data-name="Ellipse 3" cx="0.682" cy="0.714"
-                                                     rx="0.682" ry="0.714" transform="translate(12.273 13.571)"
-                                                     fill="none" stroke="#1a2224" stroke-linecap="round"
-                                                     stroke-linejoin="round" stroke-width="1.5" />
-                                            <path id="Path_3" data-name="Path 3"
-                                                  d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409"
-                                                  transform="translate(-1 -1)" fill="none" stroke="#1a2224"
-                                                  stroke-linecap="round" stroke-linejoin="round"
-                                                  stroke-width="1.5" />
+                            <div class="cart-icon">
+                                <a href="#"><i class="far fa-heart"></i></a>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75"
+                                         viewBox="0 0 16.75 16.75">
+                                        <g id="Your_Bag" data-name="Your Bag" transform="translate(0.75)">
+                                            <g id="Icon" transform="translate(0 1)">
+                                                <ellipse id="Ellipse_2" data-name="Ellipse 2" cx="0.682" cy="0.714"
+                                                         rx="0.682" ry="0.714" transform="translate(4.773 13.571)"
+                                                         fill="none" stroke="#1a2224" stroke-linecap="round"
+                                                         stroke-linejoin="round" stroke-width="1.5" />
+                                                <ellipse id="Ellipse_3" data-name="Ellipse 3" cx="0.682" cy="0.714"
+                                                         rx="0.682" ry="0.714" transform="translate(12.273 13.571)"
+                                                         fill="none" stroke="#1a2224" stroke-linecap="round"
+                                                         stroke-linejoin="round" stroke-width="1.5" />
+                                                <path id="Path_3" data-name="Path 3"
+                                                      d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409"
+                                                      transform="translate(-1 -1)" fill="none" stroke="#1a2224"
+                                                      stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="1.5" />
+                                            </g>
                                         </g>
-                                    </g>
-                                </svg>
-                            </a>
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="product-item-info">
+                        <div class="product-item-info">
                             <a asp-controller="Home" asp-action="ProductDetail" asp-route-id="@product.ProductId">@product.ProductName</a>
                             <span>@product.SellingPrice</span> <del>@(product.SellingPrice * 1.1m)</del>
+                        </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
     </div>
@@ -124,33 +124,33 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="pagination-group">
-                @if(Model.HasPreviousPage)
+                @if (Model.HasPreviousPage)
                 {
-                <a href="@Url.Action("Index", new{page = Model.PageNumber - 1})" class="p_prev">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="9.414" height="16.828" viewBox="0 0 9.414 16.828">
-                        <path id="Icon_feather-chevron-left" data-name="Icon feather-chevron-left" d="M20.5,23l-7-7,7-7" transform="translate(-12.5 -7.586)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                </a>
+                    <a href="@Url.Action("Index", new{page = Model.PageNumber - 1})" class="p_prev">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9.414" height="16.828" viewBox="0 0 9.414 16.828">
+                            <path id="Icon_feather-chevron-left" data-name="Icon feather-chevron-left" d="M20.5,23l-7-7,7-7" transform="translate(-12.5 -7.586)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                    </a>
                 }
 
 
-                @for(int i= 1; i <= Model.PageCount; i++)
+                @for (int i = 1; i <= Model.PageCount; i++)
                 {
                     <a href="@Url.Action("Index", new { page = i })" class="cdp_i @(i == Model.PageNumber ? "active" : "")">
                         @i.ToString("D2")
                     </a>
                 }
 
-              
-                @if(Model.HasNextPage)
+
+                @if (Model.HasNextPage)
                 {
-                <a href="@Url.Action("Index",new {page = Model.PageNumber + 1})" class="p_next">
+                    <a href="@Url.Action("Index",new {page = Model.PageNumber + 1})" class="p_next">
                         <svg xmlns="http://www.w3.org/2000/svg" width="9.414" height="16.829" viewBox="0 0 9.414 16.829">
                             <g id="Arrow" transform="translate(1.414 15.414) rotate(-90)">
                                 <path id="Arrow-2" data-name="Arrow" d="M1474.286,26.4l7,7,7-7" transform="translate(-1474.286 -26.4)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                             </g>
                         </svg>
-                </a>
+                    </a>
                 }
             </div>
         </div>

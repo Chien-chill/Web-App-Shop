@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_ShoeStore_Manager.Services;
+using System.Security.Claims;
 
 namespace Project_ShoeStore_Manager.Controllers
 {
@@ -13,13 +14,9 @@ namespace Project_ShoeStore_Manager.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var products = await context.Products.Select(p => new
-            {
-                p.ProductId,
-                p.ProductName,
-                p.SellingPrice,
-                MainImage = "/uploads/" + p.ProductImages.FirstOrDefault(image => image.IsMainImage).ImageFileName
-            }).ToListAsync();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var products = await context.Products.Include(pi => pi.ProductImages).ToListAsync();
+            ViewData["CartCount"] = context.ShopCart.Where(c => c.UserId == userId)?.Count() ?? 0;
             return View(products);
         }
         public async Task<IActionResult> ProductDetail(int? id)

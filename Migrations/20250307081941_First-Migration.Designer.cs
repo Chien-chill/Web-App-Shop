@@ -12,7 +12,7 @@ using Project_ShoeStore_Manager.Services;
 namespace Project_ShoeStore_Manager.Migrations
 {
     [DbContext(typeof(ShoesDbContext))]
-    [Migration("20250122084824_FirstMigration")]
+    [Migration("20250307081941_First-Migration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "aa42e6a3-88c3-4a97-a0b7-ffe4aefa71b9",
+                            Id = "2be1e9c0-2799-4106-96bb-fe9557e5326e",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "f098a7d3-ef03-4385-9a8e-de6da96abdbd",
+                            Id = "994eb403-a263-4f20-90b5-4599eb2de911",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -206,10 +206,17 @@ namespace Project_ShoeStore_Manager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandId"));
 
+                    b.Property<string>("BrandLogoImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("BrandName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
@@ -230,6 +237,12 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("CategoryId");
 
@@ -275,6 +288,28 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.Favorite", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("FavoriteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Favorite");
                 });
 
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Message", b =>
@@ -413,10 +448,10 @@ namespace Project_ShoeStore_Manager.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("ProfitMargin")
+                    b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("PurchasePrice")
+                    b.Property<decimal>("SellingPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId");
@@ -595,6 +630,49 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.ToTable("RoomChats");
                 });
 
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.ShopCart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("ShopCart");
+                });
+
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Storage", b =>
                 {
                     b.Property<int>("Id")
@@ -652,6 +730,9 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -821,6 +902,25 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.Favorite", b =>
+                {
+                    b.HasOne("Project_ShoeStore_Manager.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_ShoeStore_Manager.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Message", b =>
                 {
                     b.HasOne("Project_ShoeStore_Manager.Models.User", "User")
@@ -891,7 +991,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         .IsRequired();
 
                     b.HasOne("Project_ShoeStore_Manager.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Product")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -941,7 +1041,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         .HasForeignKey("Id");
 
                     b.HasOne("Project_ShoeStore_Manager.Models.Supplier", "Supplier")
-                        .WithMany()
+                        .WithMany("Receipt")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -995,6 +1095,39 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.ShopCart", b =>
+                {
+                    b.HasOne("Project_ShoeStore_Manager.Models.ProductColor", "ProductColor")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_ShoeStore_Manager.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Id");
+
+                    b.HasOne("Project_ShoeStore_Manager.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_ShoeStore_Manager.Models.ProductSize", "ProductSize")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductColor");
+
+                    b.Navigation("ProductSize");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Storage", b =>
                 {
                     b.HasOne("Project_ShoeStore_Manager.Models.ProductColor", "Color")
@@ -1027,6 +1160,11 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.Category", b =>
+                {
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Product", b =>
                 {
                     b.Navigation("ProductColors");
@@ -1039,6 +1177,11 @@ namespace Project_ShoeStore_Manager.Migrations
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.RoomChat", b =>
                 {
                     b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("Project_ShoeStore_Manager.Models.Supplier", b =>
+                {
+                    b.Navigation("Receipt");
                 });
 #pragma warning restore 612, 618
         }

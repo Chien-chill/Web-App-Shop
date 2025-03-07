@@ -1,4 +1,4 @@
-/******/ (function(modules) { // webpackBootstrap
+﻿/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -120,3 +120,25 @@ eval("__webpack_require__(/*! ./src/js/main.js */\"./src/js/main.js\");\nmodule.
 /***/ })
 
 /******/ });
+function selectSize(element) {
+    document.getElementById("selectedSizeId").value = element.getAttribute("data-sizeid");
+    // Highlight selected size
+
+    //document.querySelectorAll(".sizes-all").forEach(el => el.classList.remove("active"));
+    //element.classList.add("active");
+}
+
+function selectColor(element) {
+    document.getElementById("selectedColorId").value = element.getAttribute("data-colorid");
+
+    // Highlight selected color
+
+    //document.querySelectorAll(".sizes-all").forEach(el => el.classList.remove("active"));
+    //element.classList.add("active");
+}
+//document.querySelectorAll('.main-menu li a').forEach(link => {
+//    link.addEventListener('click', function () {
+//        document.querySelectorAll('.main-menu li a').forEach(item => item.classList.remove('active')); // Xóa class active cũ
+//        this.classList.add('active'); // Thêm class active vào thẻ được click
+//    });
+//});
