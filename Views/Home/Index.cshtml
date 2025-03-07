@@ -1,4 +1,4 @@
-﻿@model IEnumerable<dynamic>
+﻿@model IEnumerable<Product>
 @{
 }
 
@@ -64,12 +64,11 @@
 
                 @foreach (var product in Model)
                 {
-                    
+
                     <div class="product-item">
                         <div class="product-item-image">
-                            <a asp-controller ="Home" asp-action="ProductDetail" asp-route-id="@product.ProductId">
-                                <img src="@product.MainImage" alt="Product Name"
-                                     class="img-fluid">
+                            <a asp-controller="Home" asp-action="ProductDetail" asp-route-id="@product.ProductId">
+                                <img src="/uploads/@product.ProductImages.FirstOrDefault()?.ImageFileName" alt="Product Name" class="img-fluid">
                             </a>
                             <div class="cart-icon">
                                 <a href="#"><i class="far fa-heart"></i></a>

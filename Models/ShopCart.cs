@@ -7,7 +7,7 @@ namespace Project_ShoeStore_Manager.Models
     {
         [Key]
         public int CartId { get; set; }
-        public int Id { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("Id")]
         public virtual User User { get; set; }
         public int ProductId { get; set; }

@@ -76,7 +76,9 @@ namespace Project_ShoeStore_Manager.Migrations
                     BrandId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BrandName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    BrandLogoImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,7 +91,9 @@ namespace Project_ShoeStore_Manager.Migrations
                 {
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,7 +110,8 @@ namespace Project_ShoeStore_Manager.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    isDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,7 +276,7 @@ namespace Project_ShoeStore_Manager.Migrations
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PurchasePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ProfitMargin = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SellingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -347,7 +352,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.RoomId,
                         principalTable: "RoomChats",
                         principalColumn: "RoomId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -377,7 +382,33 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Favorite",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FavoriteId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favorite", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Favorite_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Favorite_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -397,7 +428,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -418,7 +449,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -438,7 +469,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -526,6 +557,48 @@ namespace Project_ShoeStore_Manager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShopCart",
+                columns: table => new
+                {
+                    CartId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ColorId = table.Column<int>(type: "int", nullable: false),
+                    SizeId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShopCart", x => x.CartId);
+                    table.ForeignKey(
+                        name: "FK_ShopCart_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ShopCart_ProductColors_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "ProductColors",
+                        principalColumn: "ColorId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ShopCart_ProductSizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "ProductSizes",
+                        principalColumn: "SizeId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ShopCart_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Storages",
                 columns: table => new
                 {
@@ -568,8 +641,8 @@ namespace Project_ShoeStore_Manager.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "aa42e6a3-88c3-4a97-a0b7-ffe4aefa71b9", null, "admin", "admin" },
-                    { "f098a7d3-ef03-4385-9a8e-de6da96abdbd", null, "client", "client" }
+                    { "2be1e9c0-2799-4106-96bb-fe9557e5326e", null, "admin", "admin" },
+                    { "994eb403-a263-4f20-90b5-4599eb2de911", null, "client", "client" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -619,6 +692,11 @@ namespace Project_ShoeStore_Manager.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ProductId",
                 table: "Comments",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorite_ProductId",
+                table: "Favorite",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -717,6 +795,26 @@ namespace Project_ShoeStore_Manager.Migrations
                 column: "Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShopCart_ColorId",
+                table: "ShopCart",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShopCart_Id",
+                table: "ShopCart",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShopCart_ProductId",
+                table: "ShopCart",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShopCart_SizeId",
+                table: "ShopCart",
+                column: "SizeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Storages_ColorId1",
                 table: "Storages",
                 column: "ColorId1");
@@ -757,6 +855,9 @@ namespace Project_ShoeStore_Manager.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "Favorite");
+
+            migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
@@ -767,6 +868,9 @@ namespace Project_ShoeStore_Manager.Migrations
 
             migrationBuilder.DropTable(
                 name: "ReceiptDetails");
+
+            migrationBuilder.DropTable(
+                name: "ShopCart");
 
             migrationBuilder.DropTable(
                 name: "Storages");
