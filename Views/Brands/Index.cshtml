@@ -1,0 +1,172 @@
+﻿ @model IEnumerable<Brand>
+@{
+	Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<div class="page-header">
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<div class="title">
+						<h4>Danh Sách Nhãn Hàng</h4>
+					</div>
+					<nav aria-label="breadcrumb" role="navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								Quản Lý Nhãn Hàng
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">
+								Danh Sách Nhãn Hàng
+							</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<!-- Simple Datatable start -->
+		<div class="card-box mb-30">
+			<div class="pd-20">
+				<a type="button" class="btn btn-outline-primary" data-backdrop="static"
+				   data-toggle="modal"
+				   data-target="#login-modal" asp-controller="Brands" asp-action="Create">Thêm Mới</a>
+			</div>
+			<div class="modal fade"
+				 id="login-modal"
+				 tabindex="-1"
+				 role="dialog"
+				 aria-labelledby="myLargeModalLabel"
+				 aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="login-box bg-white box-shadow border-radius-10">
+							<div class="login-title">
+								<h2 class="text-center text-primary">
+									Thêm Nhãn Hàng
+								</h2>
+							</div>
+							<form asp-controller="Brands" asp-action="Create">
+								<div class="row">
+									<div class="col-md-12 col-sm-12">
+										<div class="form-group">
+											<label>Tên Nhãn Hàng: </label>
+											<input type="text" class="form-control" name="BrandName">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12 col-sm-12">
+										<div class="form-group">
+											<input type="file" accept="image/*" onchange="loadFile(event)" name="BrandLogoImage">
+											<img id="output" />
+											<script>
+												var loadFile = function(event) {
+												  var output = document.getElementById('output');
+												  output.src = URL.createObjectURL(event.target.files[0]);
+												  output.onload = function() {
+													URL.revokeObjectURL(output.src) // free memory
+												  }
+												};
+											</script>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<div class="form-group">
+											<button id="submit" type="submit" class="btn btn-primary">Xác Nhận</button>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-group">
+											<a class="btn btnbtn-outline-primary" asp-controller="Brands" asp-action="Index">Hủy</a>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pb-20">
+				<table class="data-table table stripe hover nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">Mã Nhãn Hàng</th>
+							<th>Tên Nhãn Hàng</th>
+							<th>Logo</th>
+							<th>Ngày Tạo</th>
+							<th class="datatable-nosort">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var Brand in Model)
+						{
+							<tr>
+								<td class="table-plus">@Brand.BrandId</td>
+								<td>@Brand.BrandName</td>
+								<td><img src="/uploads/@Brand.BrandLogoImage"/></td>
+								<td>@Brand.CreatedAt</td>
+								<td>
+									<div class="dropdown">
+										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+										   href="#"
+										   role="button"
+										   data-toggle="dropdown">
+											<i class="dw dw-more"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+											<a class="dropdown-item" asp-controller="Brands" asp-action="Edit" asp-route-id="@Brand.BrandId"><i class="dw dw-edit2"></i> Chỉnh Sửa</a>
+											<a data-toggle="modal" data-target="#confirmation-modal" class="dropdown-item"><i class="dw dw-delete-3"></i> Xóa</a>
+
+										</div>
+									</div>
+									<div class="modal fade"
+										 id="confirmation-modal"
+										 tabindex="-1"
+										 role="dialog"
+										 aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											 role="document">
+											<div class="modal-content">
+												<div class="modal-body text-center font-18">
+													<h4 class="padding-top-30 mb-30 weight-500">
+														Are you sure you want to delete? @Brand.BrandId
+													</h4>
+													<div class="padding-bottom-30 row"
+														 style="max-width: 170px; margin: 0 auto">
+														<div class="col-6">
+															<button type="button"
+																	class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+																	data-dismiss="modal">
+																<i class="fa fa-times"></i>
+															</button>
+															NO
+														</div>
+														<div class="col-6">
+															<form asp-controller="Brands" asp-action="Delete" asp-route-id="@Brand.BrandId" method="post">
+																<button type="submit"
+																		id="sa-custom-position"
+																		class="btn btn-primary border-radius-100 btn-block confirmation-btn">
+																	<i class="fa fa-check"></i>
+																</button>
+															</form>
+															YES
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+

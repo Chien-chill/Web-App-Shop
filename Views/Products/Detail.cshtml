@@ -76,14 +76,14 @@
 									</dd>
 									<dt class="col-sm-3">Giá Nhập:</dt>
 									<dd class="col-sm-9 price">
-										@Model.PurchasePrice VND
+										@Model.PurchasePrice.ToString("C2")
 									</dd>
 
 									<dt class="col-sm-3">
 										Giá Bán:
 									</dt>
 									<dd class="col-sm-9">
-										@Model.SellingPrice VND
+									@Model.SellingPrice.ToString("C2")
 									</dd>
 
 									<dt class="col-sm-3">Mô Tả:</dt>
