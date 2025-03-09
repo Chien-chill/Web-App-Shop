@@ -16,13 +16,6 @@ namespace Project_ShoeStore_Manager.Controllers
         {
             int pageSize = 3;
             int pageNumber = (page == null || page < 0) ? 1 : page.Value;
-            //var products = context.Products.Select(p => new
-            //{
-            //    p.ProductId,
-            //    p.ProductName,
-            //    p.SellingPrice,
-            //    MainImage = "/uploads/" + p.ProductImages.FirstOrDefault(image => image.IsMainImage).ImageFileName
-            //}).ToPagedList(pageNumber, pageSize);
             var products = context.Products.Include(pi => pi.ProductImages).ToPagedList(pageNumber, pageSize);
             ViewData["BrandId"] = new SelectList(context.Brands, "BrandId", "BrandName");
             ViewData["CategoryId"] = new SelectList(context.Categories, "CategoryId", "CategoryName");
