@@ -46,7 +46,7 @@
 									Thêm Nhãn Hàng
 								</h2>
 							</div>
-							<form asp-controller="Brands" asp-action="Create">
+							<form asp-controller="Brands" asp-action="Create" enctype="multipart/form-data">
 								<div class="row">
 									<div class="col-md-12 col-sm-12">
 										<div class="form-group">
@@ -107,7 +107,7 @@
 							<tr>
 								<td class="table-plus">@Brand.BrandId</td>
 								<td>@Brand.BrandName</td>
-								<td><img src="/uploads/@Brand.BrandLogoImage"/></td>
+								<td><img style="max-width: 150px; max-height: 150px; object-fit: contain;" src="/uploads/@Brand.BrandLogoImage" /></td>
 								<td>@Brand.CreatedAt</td>
 								<td>
 									<div class="dropdown">
@@ -118,7 +118,7 @@
 											<i class="dw dw-more"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-											<a class="dropdown-item" asp-controller="Brands" asp-action="Edit" asp-route-id="@Brand.BrandId"><i class="dw dw-edit2"></i> Chỉnh Sửa</a>
+											@* <a class="dropdown-item" asp-controller="Brands" asp-action="Edit" asp-route-id="@Brand.BrandId"><i class="dw dw-edit2"></i> Chỉnh Sửa</a> *@
 											<a data-toggle="modal" data-target="#confirmation-modal" class="dropdown-item"><i class="dw dw-delete-3"></i> Xóa</a>
 
 										</div>

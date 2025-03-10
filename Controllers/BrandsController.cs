@@ -16,7 +16,7 @@ namespace Project_ShoeStore_Manager.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var brands = await context.Brands.ToListAsync();
+            var brands = await context.Brands.Where(b => !b.isDeleted).ToListAsync();
             return View(brands);
         }
         [HttpPost]
@@ -34,6 +34,22 @@ namespace Project_ShoeStore_Manager.Controllers
                 BrandLogoImage = ImageName
             };
             await context.Brands.AddAsync(brand);
+            await context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var brand = await context.Brands.FindAsync(id);
+            if (brand == null)
+            {
+                return NotFound();
+            }
+            brand.isDeleted = true;
             await context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
