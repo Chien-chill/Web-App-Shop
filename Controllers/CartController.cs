@@ -53,5 +53,21 @@ namespace Project_ShoeStore_Manager.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var cartItem = await context.ShopCart.FindAsync(id);
+            if (cartItem == null)
+            {
+                return NotFound();
+            }
+            context.ShopCart.Remove(cartItem);
+            await context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }

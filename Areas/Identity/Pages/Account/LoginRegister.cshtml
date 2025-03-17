@@ -1,0 +1,213 @@
+@page
+@model LoginRegisterModel
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Login/Register";
+}
+
+<div class="container">
+    <div class="forms-container">
+        <ul class="notifications"></ul>
+        <div class="signin-signup">
+
+            <form id="loginForm" method="post" class="sign-in-form">
+                <h2 class="title">Sign In</h2>
+                @* <div asp-validation-summary="All" class="text-danger" role="alert"></div> *@
+
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" asp-for="LoginInput.Email" autocomplete="username" aria-required="true" placeholder="Email" />
+                    <span asp-validation-for="LoginInput.Email" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" asp-for="LoginInput.Password" value="" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
+                </div>
+
+                <div class="checkbox mb-3">
+                    <label asp-for="LoginInput.RememberMe" class="form-label">
+                     <input class="form-check-input" asp-for="LoginInput.RememberMe" />
+                @Html.DisplayNameFor(m => m.LoginInput.RememberMe)
+                    </label>
+                </div>
+
+                <div class="buttons">
+                <button id="error" type="submit" asp-page-handler="Login" class="w-100 btn btn-lg btn-primary solid">Log in</button>
+                </div>
+                <div class="mt-3">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    </p>
+                </div>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </form>
+
+            <form id="registerForm" method="post" asp-page-handler="Register" class="sign-up-form">
+                <input type="hidden" name="handler" value="register" />
+                @* <div asp-validation-summary="All" class="text-danger" role="alert"></div> *@
+                @* <div class="input-field"> *@
+                @*     <label asp-for="RegisterInput.FirstName">Tên</label> *@
+                @*     <input asp-for="RegisterInput.FirstName" class="form-control" aria-required="true" placeholder="FirstName" /> *@
+                @*     <span asp-validation-for="RegisterInput.FirstName" class="text-danger"></span> *@
+                @* </div> *@
+                @* <div class="input-field"> *@
+                @*     <label asp-for="RegisterInput.LastName">Họ</label> *@
+                @*     <input asp-for="RegisterInput.LastName" class="form-control" aria-required="true" placeholder="LastName" /> *@
+                @*     <span asp-validation-for="RegisterInput.LastName" class="text-danger"></span> *@
+                @* </div> *@
+                @* <div class="input-field"> *@
+                @*     <label asp-for="RegisterInput.Phone">Số điện thoại</label> *@
+                @*     <input asp-for="RegisterInput.Phone" class="form-control" aria-required="true" placeholder="Phone" /> *@
+                @*     <span asp-validation-for="RegisterInput.Phone" class="text-danger"></span> *@
+                @* </div> *@
+                @* <div class="input-field"> *@
+                @*     <label asp-for="RegisterInput.Address">Địa chỉ</label> *@
+                @*     <input asp-for="RegisterInput.Address" class="form-control" aria-required="true" placeholder="Address" /> *@
+                @*     <span asp-validation-for="RegisterInput.Address" class="text-danger"></span> *@
+                @* </div> *@
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" asp-for="RegisterInput.Email" autocomplete="username" aria-required="true" placeholder="Email" />
+                    <span asp-validation-for="RegisterInput.Email" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" asp-for="RegisterInput.Password" autocomplete="new-password" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="RegisterInput.Password" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" asp-for="RegisterInput.ConfirmPassword" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
+                    <span asp-validation-for="RegisterInput.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panels-container">
+
+        <div class="panel left-panel">
+            <div class="content">
+                <h3>New here?</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio minus natus est.</p>
+                <button class="btn transparent" id="sign-up-btn">Sign Up</button>
+            </div>
+            <img src="~/uploads/log.svg" class="image" alt="">
+        </div>
+
+        <div class="panel right-panel">
+            <div class="content">
+                <h3>One of us?</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio minus natus est.</p>
+                <button class="btn transparent" id="sign-in-btn">Sign In</button>
+            </div>
+            <img src="~/uploads//register.svg" class="image" alt="">
+        </div>
+    </div>
+</div>
+<script>
+    const notifications = document.querySelector(".notifications"),
+    buttons = document.querySelectorAll(".buttons .btn");
+
+    const toastDetails = {
+        timer: 5000,
+        success: {
+            icon: 'fa-circle-check',
+            text: 'Success: This is a success toast.',
+        },
+        error: {
+            icon: 'fa-circle-xmark',
+            text: 'Error: This is an error toast.',
+        },
+        warning: {
+            icon: 'fa-triangle-exclamation',
+            text: 'Warning: This is a warning toast.',
+        },
+        info: {
+            icon: 'fa-circle-info',
+            text: 'Info: This is an information toast.',
+        }
+    }
+
+    const removeToast = (toast) => {
+        toast.classList.add("hide");
+        if(toast.timeoutId) clearTimeout(toast.timeoutId); // Clearing the timeout for the toast
+        setTimeout(() => toast.remove(), 500); // Removing the toast after 500ms
+    }
+
+    const createToast = (id, message = null) => {
+        // Getting the icon and text for the toast based on the id passed
+        const { icon } = toastDetails[id];
+        const text = message || toastDetails[id].text;
+        const toast = document.createElement("li"); // Creating a new 'li' element for the toast
+        toast.className = `toast ${id}`; // Setting the classes for the toast
+        // Setting the inner HTML for the toast
+        toast.innerHTML = `<div class="column">
+                             <i class="fa-solid ${icon}"></i>
+                             <span>${text}</span>
+                          </div>
+                          <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+        notifications.appendChild(toast); // Append the toast to the notification ul
+        // Setting a timeout to remove the toast after the specified duration
+        toast.timeoutId = setTimeout(() => removeToast(toast), toastDetails.timer);
+    }
+
+    // Adding a click event listener to each button to create a toast when clicked
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => createToast(btn.id));
+    });
+
+    // Handle validation messages
+    document.addEventListener('DOMContentLoaded', function() {
+        const validationSummaries = document.querySelectorAll('.validation-summary-errors ul li');
+        validationSummaries.forEach(item => {
+            createToast('error', item.textContent);
+        });
+
+        const validationSpans = document.querySelectorAll('[class*="field-validation-error"]');
+        validationSpans.forEach(span => {
+            if(span.textContent.trim()) {
+                createToast('error', span.textContent);
+            }
+        });
+    });
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} 
+
+
+
+
+
