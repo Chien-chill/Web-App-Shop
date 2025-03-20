@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project_ShoeStore_Manager.Models
 {
     public class Favorite
     {
+        [Key]
         public int FavoriteId { get; set; }
         public string UserId { get; set; }
         [ForeignKey("Id")]

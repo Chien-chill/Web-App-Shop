@@ -51,13 +51,13 @@ namespace Project_ShoeStore_Manager.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2be1e9c0-2799-4106-96bb-fe9557e5326e",
+                            Id = "7c759868-6796-4cf5-88ca-2b4d8d01aaab",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "994eb403-a263-4f20-90b5-4599eb2de911",
+                            Id = "8ad162fb-5d42-4675-b94b-fdbf5f82def5",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -289,11 +289,14 @@ namespace Project_ShoeStore_Manager.Migrations
 
             modelBuilder.Entity("Project_ShoeStore_Manager.Models.Favorite", b =>
                 {
+                    b.Property<int>("FavoriteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteId"));
+
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("FavoriteId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -302,7 +305,9 @@ namespace Project_ShoeStore_Manager.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("FavoriteId");
+
+                    b.HasIndex("Id");
 
                     b.HasIndex("ProductId");
 
@@ -903,9 +908,7 @@ namespace Project_ShoeStore_Manager.Migrations
                 {
                     b.HasOne("Project_ShoeStore_Manager.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Id");
 
                     b.HasOne("Project_ShoeStore_Manager.Models.Product", "Product")
                         .WithMany()

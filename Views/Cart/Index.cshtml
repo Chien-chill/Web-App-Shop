@@ -83,7 +83,9 @@
                                             </g>
                                         </svg>
                                     </a>
-                                    <a class="del" asp-controller="Cart" asp-action="Delete" asp-route-id="@item.CartId">Delete</a>
+                                    <form asp-controller="Cart" asp-action="Delete" asp-route-id="@item.CartId" method="post" style="display: inline;">
+                                        <button type="submit" class="del" style="background: none; border: none; cursor: pointer;">Delete</button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="price">

@@ -352,7 +352,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.RoomId,
                         principalTable: "RoomChats",
                         principalColumn: "RoomId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -382,33 +382,33 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Favorite",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FavoriteId = table.Column<int>(type: "int", nullable: false),
+                    FavoriteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Favorite", x => x.Id);
+                    table.PrimaryKey("PK_Favorite", x => x.FavoriteId);
                     table.ForeignKey(
                         name: "FK_Favorite_AspNetUsers_Id",
                         column: x => x.Id,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Favorite_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -428,7 +428,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -469,7 +469,7 @@ namespace Project_ShoeStore_Manager.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -641,8 +641,8 @@ namespace Project_ShoeStore_Manager.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2be1e9c0-2799-4106-96bb-fe9557e5326e", null, "admin", "admin" },
-                    { "994eb403-a263-4f20-90b5-4599eb2de911", null, "client", "client" }
+                    { "7c759868-6796-4cf5-88ca-2b4d8d01aaab", null, "admin", "admin" },
+                    { "8ad162fb-5d42-4675-b94b-fdbf5f82def5", null, "client", "client" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -693,6 +693,11 @@ namespace Project_ShoeStore_Manager.Migrations
                 name: "IX_Comments_ProductId",
                 table: "Comments",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorite_Id",
+                table: "Favorite",
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Favorite_ProductId",

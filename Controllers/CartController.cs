@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_ShoeStore_Manager.DTOs;
 using Project_ShoeStore_Manager.Models;
@@ -8,6 +9,7 @@ using System.Security.Claims;
 
 namespace Project_ShoeStore_Manager.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ShoesDbContext context;
@@ -20,7 +22,7 @@ namespace Project_ShoeStore_Manager.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
-                return Redirect("/Identity/Account/Login");
+                return Redirect("/Identity/Account/LoginRegister");
             }
             var cartList = await context.ShopCart.Where(c => c.UserId.Equals(userId))
                                                  .Include(c => c.Product)
@@ -54,13 +56,13 @@ namespace Project_ShoeStore_Manager.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int Cartid)
         {
-            if (id == null)
+            if (Cartid == null)
             {
                 return NotFound();
             }
-            var cartItem = await context.ShopCart.FindAsync(id);
+            var cartItem = await context.ShopCart.FindAsync(Cartid);
             if (cartItem == null)
             {
                 return NotFound();
