@@ -9,7 +9,7 @@ namespace Project_ShoeStore_Manager.Models
         public int OrderId { get; set; }
         [Required]
         public string UserId { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
         public decimal TotalAmount { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

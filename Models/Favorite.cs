@@ -8,7 +8,7 @@ namespace Project_ShoeStore_Manager.Models
         [Key]
         public int FavoriteId { get; set; }
         public string UserId { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("UserId")]
         public User User { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]

@@ -61,27 +61,29 @@
 
             <form id="registerForm" method="post" asp-page-handler="Register" class="sign-up-form">
                 <input type="hidden" name="handler" value="register" />
-                @* <div asp-validation-summary="All" class="text-danger" role="alert"></div> *@
-                @* <div class="input-field"> *@
-                @*     <label asp-for="RegisterInput.FirstName">Tên</label> *@
-                @*     <input asp-for="RegisterInput.FirstName" class="form-control" aria-required="true" placeholder="FirstName" /> *@
-                @*     <span asp-validation-for="RegisterInput.FirstName" class="text-danger"></span> *@
-                @* </div> *@
-                @* <div class="input-field"> *@
-                @*     <label asp-for="RegisterInput.LastName">Họ</label> *@
-                @*     <input asp-for="RegisterInput.LastName" class="form-control" aria-required="true" placeholder="LastName" /> *@
-                @*     <span asp-validation-for="RegisterInput.LastName" class="text-danger"></span> *@
-                @* </div> *@
-                @* <div class="input-field"> *@
-                @*     <label asp-for="RegisterInput.Phone">Số điện thoại</label> *@
-                @*     <input asp-for="RegisterInput.Phone" class="form-control" aria-required="true" placeholder="Phone" /> *@
-                @*     <span asp-validation-for="RegisterInput.Phone" class="text-danger"></span> *@
-                @* </div> *@
-                @* <div class="input-field"> *@
-                @*     <label asp-for="RegisterInput.Address">Địa chỉ</label> *@
-                @*     <input asp-for="RegisterInput.Address" class="form-control" aria-required="true" placeholder="Address" /> *@
-                @*     <span asp-validation-for="RegisterInput.Address" class="text-danger"></span> *@
-                @* </div> *@
+                <!--
+                <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+                <div class="input-field">
+                    <label asp-for="RegisterInput.FirstName">Tên</label>
+                    <input asp-for="RegisterInput.FirstName" class="form-control" aria-required="true" placeholder="FirstName" />
+                    <span asp-validation-for="RegisterInput.FirstName" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <label asp-for="RegisterInput.LastName">Họ</label>
+                    <input asp-for="RegisterInput.LastName" class="form-control" aria-required="true" placeholder="LastName" />
+                    <span asp-validation-for="RegisterInput.LastName" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <label asp-for="RegisterInput.Phone">Số điện thoại</label>
+                    <input asp-for="RegisterInput.Phone" class="form-control" aria-required="true" placeholder="Phone" />
+                    <span asp-validation-for="RegisterInput.Phone" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <label asp-for="RegisterInput.Address">Địa chỉ</label>
+                    <input asp-for="RegisterInput.Address" class="form-control" aria-required="true" placeholder="Address" />
+                    <span asp-validation-for="RegisterInput.Address" class="text-danger"></span>
+                </div>
+                -->
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
                     <input type="email" asp-for="RegisterInput.Email" autocomplete="username" aria-required="true" placeholder="Email" />

@@ -13,7 +13,7 @@ namespace Project_ShoeStore_Manager.Models
         public RoomChat RoomChat { get; set; }
         [Required]
         public string UserId { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("UserId")]
         public User User { get; set; }
         [Required]
         public string Content { get; set; }
