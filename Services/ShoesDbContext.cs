@@ -35,7 +35,7 @@ namespace Project_ShoeStore_Manager.Services
         public DbSet<Storage> Storages { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<ShopCart> ShopCart { get; set; }
-        public DbSet<Favorite> Favorite { get; set; }
+        public DbSet<Wishlist> WishList { get; set; }
 
     }
 }

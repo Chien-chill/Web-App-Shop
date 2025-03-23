@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project_ShoeStore_Manager.Models
 {
-    public class Favorite
+    public class Wishlist
     {
         [Key]
-        public int FavoriteId { get; set; }
+        public int WishlistId { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }

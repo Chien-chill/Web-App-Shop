@@ -20,7 +20,7 @@
                             <a href="index.html"><img src="dist/images/logo/logo.png" alt="logo" /></a>
                         </div>
                         <ul class="main-menu d-flex align-items-center">
-                            <li><a asp-controller="Home" asp-action="Index" class="@(Context.Request.Path == "/" ? "active" : "")">Home</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                             <li><a >Men</a></li>
                             <li><a >Women</a></li>
                             <li><a asp-controller="Shop" asp-action="Index">Shop</a></li>
@@ -45,7 +45,7 @@
                         <div class="menu-icon ml-auto">
                             <ul>
                                 <li>
-                                    <a href="wishlist.html">
+                                    <a asp-controller="Wishlist" asp-action="Index">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"
                                              viewBox="0 0 22 20">
                                             <g id="Heart" transform="translate(1 1)">
@@ -55,7 +55,7 @@
                                                       stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                                             </g>
                                         </svg>
-                                        <span class="heart">30</span>
+                                        <span class="heart">@ViewData["WishlistCount"]</span>
                                     </a>
                                 </li>
                                 <li>
@@ -110,30 +110,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a href="shop.html">Men</a></li>
                         <li><a href="shop.html">Women</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                Category
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9.98" height="5.69"
-                                     viewBox="0 0 9.98 5.69">
-                                    <g id="Arrow" transform="translate(0.99 0.99)">
-                                        <path id="Arrow-2" data-name="Arrow" d="M1474.286,26.4l4,4,4-4"
-                                              transform="translate(-1474.286 -26.4)" fill="none" stroke="#1a2224"
-                                              stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" />
-                                    </g>
-                                </svg>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="javascript:void(0)">Category 1</a></li>
-                                <li><a href="javascript:void(0)">Category 2</a></li>
-                                <li><a href="javascript:void(0)">Category 3</a></li>
-                                <li><a href="javascript:void(0)">Category 4</a></li>
-                                <li><a href="javascript:void(0)">Category 5</a></li>
-                            </ul>
-                        </li>
+                        <li><a asp-controller="Shop" asp-action="Index">Shop</a></li>
                         <li><a href="javascript:void(0)">Sales</a></li>
                     </div>
                     <div class="mobile-nav d-flex align-items-center justify-content-between">
@@ -159,7 +139,7 @@
                         <div class="menu-icon">
                             <ul>
                                 <li>
-                                    <a href="wishlist.html">
+                                    <a asp-controller="Wishlist" asp-action="Index">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"
                                              viewBox="0 0 22 20">
                                             <g id="Heart" transform="translate(1 1)">
@@ -169,11 +149,11 @@
                                                       stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                                             </g>
                                         </svg>
-                                        <span class="heart">3</span>
+                                        <span class="heart">@ViewData["WishlistCount"]</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="cart.html">
+                                    <a asp-controller="Cart" asp-action="Index">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                              viewBox="0 0 22 22">
                                             <g id="Icon" transform="translate(-1524 -89)">
@@ -191,7 +171,7 @@
                                                       stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                                             </g>
                                         </svg>
-                                        <span class="cart">3</span>
+                                        <span class="cart">@ViewData["CartCount"]</span>
                                     </a>
                                 </li>
                                 <li>
@@ -323,6 +303,7 @@
     <script src="~/src/scss/vendors/plugin/js/slick.min.js" asp-append-version="true"></script>
     <script src="~/src/scss/vendors/plugin/js/jquery.exzoom.js" asp-append-version="true"></script>
     <script src="~/src/scss/vendors/plugin/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/src/scss/vendors/plugin/js/wan-spinner.js" asp-append-version="true"></script>
     <script src="~/dist/main.js" asp-append-version="true"></script>
     <script>
         function openNav() {

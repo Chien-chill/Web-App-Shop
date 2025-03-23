@@ -16,42 +16,46 @@ namespace Project_ShoeStore_Manager.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var wishList = await context.Favorite.Where(f => f.UserId == userId)
+            if (userId == null)
+            {
+                return RedirectToPage("/Account/LoginRegister", new { area = "Identity" });
+            }
+            var wishList = await context.WishList.Where(f => f.UserId == userId)
                                            .Include(f => f.Product)
                                            .ThenInclude(f => f.ProductImages).ToListAsync();
 
             return View(wishList);
         }
         [HttpGet]
-        public async Task<IActionResult> Create(int ProductId)
+        public async Task<IActionResult> Create(int id)
         {
-            if (ProductId == null)
-            {
-                return NotFound();
-            }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
                 return RedirectToPage("/Account/LoginRegister", new { area = "Identity" });
             }
-            Favorite favorite = new Favorite()
+            if (!await context.WishList.AnyAsync(w => w.UserId == userId && w.ProductId == id))
             {
-                UserId = userId,
-                ProductId = ProductId
-            };
-            await context.Favorite.AddAsync(favorite);
-            await context.SaveChangesAsync();
-            return RedirectToAction("Index");
+                Wishlist wishlist = new Wishlist()
+                {
+                    ProductId = id,
+                    UserId = userId
+                };
+                await context.WishList.AddAsync(wishlist);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return Content("Đã có r");
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var favorite = await context.Favorite.FindAsync(id);
-            context.Favorite.Remove(favorite);
+            var wishlist = await context.WishList.FindAsync(id);
+            context.WishList.Remove(wishlist);
             await context.SaveChangesAsync();
             return RedirectToAction("Index");
         }

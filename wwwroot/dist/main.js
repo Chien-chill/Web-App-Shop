@@ -142,3 +142,14 @@ function selectColor(element) {
 //        this.classList.add('active'); // Thêm class active vào thẻ được click
 //    });
 //});
+
+// Initialize WanSpinner for quantity controls
+$(document).ready(function() {
+    $('.wan-spinner').WanSpinner({
+        maxValue: 100,
+        minValue: 1,
+        step: 1,
+        start: 1,
+        inputWidth: 53
+    });
+});

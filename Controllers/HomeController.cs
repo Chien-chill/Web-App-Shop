@@ -17,6 +17,7 @@ namespace Project_ShoeStore_Manager.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var products = await context.Products.Include(pi => pi.ProductImages).ToListAsync();
             ViewData["CartCount"] = context.ShopCart.Where(c => c.UserId == userId)?.Count() ?? 0;
+            ViewData["WishlistCount"] = context.WishList.Where(w => w.UserId == userId)?.Count() ?? 0;
             return View(products);
         }
         public async Task<IActionResult> ProductDetail(int? id)

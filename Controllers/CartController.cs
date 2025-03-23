@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_ShoeStore_Manager.DTOs;
 using Project_ShoeStore_Manager.Models;
@@ -9,7 +8,6 @@ using System.Security.Claims;
 
 namespace Project_ShoeStore_Manager.Controllers
 {
-    [Authorize]
     public class CartController : Controller
     {
         private readonly ShoesDbContext context;
@@ -22,7 +20,8 @@ namespace Project_ShoeStore_Manager.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
-                return Redirect("/Identity/Account/LoginRegister");
+                return RedirectToPage("/Account/LoginRegister", new { area = "Identity" });
+
             }
             var cartList = await context.ShopCart.Where(c => c.UserId.Equals(userId))
                                                  .Include(c => c.Product)
@@ -38,22 +37,30 @@ namespace Project_ShoeStore_Manager.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
-                return Redirect("/Identity/Account/Login");
+                return RedirectToPage("/Account/LoginRegister", new { area = "Identity" });
             }
-            var productPrice = context.Products.Where(p => p.ProductId == cartDto.ProductId).Select(p => p.SellingPrice).FirstOrDefault();
-            cartDto.TotalAmount = productPrice * cartDto.Quantity;
-            ShopCart cart = new ShopCart()
+            bool exist_CartItem = await context.ShopCart.AnyAsync(c => c.UserId == userId
+                                                                  && c.ProductId == cartDto.ProductId
+                                                                  && c.SizeId == cartDto.SizeId
+                                                                  && c.ColorId == cartDto.ColorId);
+            if (!exist_CartItem)
             {
-                UserId = userId,
-                ProductId = cartDto.ProductId,
-                SizeId = cartDto.SizeId,
-                ColorId = cartDto.ColorId,
-                Quantity = cartDto.Quantity,
-                TotalAmount = cartDto.TotalAmount
-            };
-            await context.ShopCart.AddAsync(cart);
-            await context.SaveChangesAsync();
-            return RedirectToAction("Index");
+                var productPrice = context.Products.Where(p => p.ProductId == cartDto.ProductId).Select(p => p.SellingPrice).FirstOrDefault();
+                cartDto.TotalAmount = productPrice * cartDto.Quantity;
+                ShopCart cart = new ShopCart()
+                {
+                    UserId = userId,
+                    ProductId = cartDto.ProductId,
+                    SizeId = cartDto.SizeId,
+                    ColorId = cartDto.ColorId,
+                    Quantity = cartDto.Quantity,
+                    TotalAmount = cartDto.TotalAmount
+                };
+                await context.ShopCart.AddAsync(cart);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return Content("Đã từng thêm");
         }
         [HttpPost]
         public async Task<IActionResult> Delete(int Cartid)
