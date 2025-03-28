@@ -39,6 +39,5 @@ namespace Project_ShoeStore_Manager.Controllers
             }
             return View(product);
         }
-
     }
 }

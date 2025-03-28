@@ -1,6 +1,8 @@
 ﻿@model X.PagedList.IPagedList<Product>
 @using X.PagedList.Mvc.Core
+@using Project_ShoeStore_Manager.DTOs
 @{
+    var filter = ViewData["Filter"] as FilterProduct;
 }
 <!-- BreadCrumb Start-->
 <section class="breadcrumb-area mt-15">
@@ -24,9 +26,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="search-wrapper">
-                <form class="search-wrapper-box">
-                    <input type="text" placeholder="Search Heare.">
-                    <button class="btn bg-primary" type="submit">SEARCH</button>
+                <form asp-controller="Shop" asp-action="Index" method="get" class="search-wrapper-box">
+                    <input type="text" name="SearchString" placeholder="Tìm kiếm sản phẩm..." value="@filter?.SearchString">
+                    <button class="btn bg-primary" type="submit">Tìm kiếm</button>
                 </form>
             </div>
         </div>
@@ -38,31 +40,38 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="categoryitem-wrapper">
-                <div class="categoryitem-wrapper-itembox">
-                    <h6>Loại Sản Phẩm</h6>
-                    <select asp-items="ViewBag.CategoryId"></select>
-                </div>
-                <div class="categoryitem-wrapper-itembox">
-                    <h6>Nhãn Hàng</h6>
-                    <select asp-items="ViewBag.BrandId"></select>
-                </div>
-                <div class="categoryitem-wrapper-price">
-                    <h6>Price</h6>
-                    <form class="price-item">
-                        <input type="number" placeholder="$ Min">
-                        <span>|</span>
-                        <input type="number" placeholder="$ Max">
-                    </form>
-                </div>
-                <div class="categoryitem-wrapper-itembox">
-                    <h6>Sort By</h6>
-                    <select>
-                        <option data-display="Men">Men</option>
-                        <option value="1">Men</option>
-                        <option value="2">Men</option>
-                        <option value="4">Men</option>
-                    </select>
-                </div>
+                <form asp-controller="Shop" asp-action="Index" method="get" id="filterForm" class="d-flex flex-wrap">
+                    <div class="categoryitem-wrapper-itembox">
+                        <h6>Loại Sản Phẩm</h6>
+                        <select name="CategoryId" asp-items="ViewBag.CategoryId" class="form-select">
+                            <option value="">Tất cả</option>
+                        </select>
+                    </div>
+                    <div class="categoryitem-wrapper-itembox">
+                        <h6>Nhãn Hàng</h6>
+                        <select name="BrandId" asp-items="ViewBag.BrandId" class="form-select">
+                            <option value="">Tất cả</option>
+                        </select>
+                    </div>
+                    <div class="categoryitem-wrapper-price">
+                        <h6>Giá</h6>
+                        <div class="price-item">
+                            <input type="number" name="MinPrice" placeholder="Giá tối thiểu" value="@filter?.MinPrice">
+                            <span>|</span>
+                            <input type="number" name="MaxPrice" placeholder="Giá tối đa" value="@filter?.MaxPrice">
+                        </div>
+                    </div>
+                    <div class="categoryitem-wrapper-itembox">
+                        <h6>Sắp xếp</h6>
+                        <select name="SortBy" class="form-select">
+                            <option value="">Mặc định</option>
+                            <option value="price_asc" selected="@(filter?.SortBy == "price_asc")">Giá tăng dần</option>
+                            <option value="price_desc" selected="@(filter?.SortBy == "price_desc")">Giá giảm dần</option>
+                            <option value="name_asc" selected="@(filter?.SortBy == "name_asc")">Tên A-Z</option>
+                            <option value="name_desc" selected="@(filter?.SortBy == "name_desc")">Tên Z-A</option>
+                        </select>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -83,29 +92,31 @@
                                      class="img-fluid">
                             </a>
                             <div class="cart-icon">
-                                <a href="#"><i class="far fa-heart"></i></a>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75"
-                                         viewBox="0 0 16.75 16.75">
-                                        <g id="Your_Bag" data-name="Your Bag" transform="translate(0.75)">
-                                            <g id="Icon" transform="translate(0 1)">
-                                                <ellipse id="Ellipse_2" data-name="Ellipse 2" cx="0.682" cy="0.714"
-                                                         rx="0.682" ry="0.714" transform="translate(4.773 13.571)"
-                                                         fill="none" stroke="#1a2224" stroke-linecap="round"
-                                                         stroke-linejoin="round" stroke-width="1.5" />
-                                                <ellipse id="Ellipse_3" data-name="Ellipse 3" cx="0.682" cy="0.714"
-                                                         rx="0.682" ry="0.714" transform="translate(12.273 13.571)"
-                                                         fill="none" stroke="#1a2224" stroke-linecap="round"
-                                                         stroke-linejoin="round" stroke-width="1.5" />
-                                                <path id="Path_3" data-name="Path 3"
-                                                      d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409"
-                                                      transform="translate(-1 -1)" fill="none" stroke="#1a2224"
-                                                      stroke-linecap="round" stroke-linejoin="round"
-                                                      stroke-width="1.5" />
+                                <a asp-controller="Wishlist" asp-action="Create" asp-route-id="@product.ProductId"><i class="far fa-heart"></i></a>
+                                <!--
+                                    <a href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75"
+                                             viewBox="0 0 16.75 16.75">
+                                            <g id="Your_Bag" data-name="Your Bag" transform="translate(0.75)">
+                                                <g id="Icon" transform="translate(0 1)">
+                                                    <ellipse id="Ellipse_2" data-name="Ellipse 2" cx="0.682" cy="0.714"
+                                                             rx="0.682" ry="0.714" transform="translate(4.773 13.571)"
+                                                             fill="none" stroke="#1a2224" stroke-linecap="round"
+                                                             stroke-linejoin="round" stroke-width="1.5" />
+                                                    <ellipse id="Ellipse_3" data-name="Ellipse 3" cx="0.682" cy="0.714"
+                                                             rx="0.682" ry="0.714" transform="translate(12.273 13.571)"
+                                                             fill="none" stroke="#1a2224" stroke-linecap="round"
+                                                             stroke-linejoin="round" stroke-width="1.5" />
+                                                    <path id="Path_3" data-name="Path 3"
+                                                          d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409"
+                                                          transform="translate(-1 -1)" fill="none" stroke="#1a2224"
+                                                          stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="1.5" />
+                                                </g>
                                             </g>
-                                        </g>
-                                    </svg>
-                                </a>
+                                        </svg>
+                                    </a>
+                                -->
                             </div>
                         </div>
                         <div class="product-item-info">
@@ -157,3 +168,23 @@
     </div>
 </section>
 <!-- Pagination End -->
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Tự động submit form khi select thay đổi
+            $('select').change(function() {
+                $('#filterForm').submit();
+            });
+
+            // Tự động submit form khi input price thay đổi (sau 500ms)
+            let timeout = null;
+            $('input[type="number"]').on('input', function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    $('#filterForm').submit();
+                }, 500);
+            });
+        });
+    </script>
+}
